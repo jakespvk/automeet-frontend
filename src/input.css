@@ -3,14 +3,29 @@
 @tailwind utilities;
 
 .geist-main-heading {
-  font-family: "Geist", serif;
-  font-optical-sizing: auto;
-  font-weight: 500;
-  font-style: normal;
+    font-family: "Geist", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
 }
 .geist-base {
-  font-family: "Geist", serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
+    font-family: "Geist", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+@layer components {
+    .btn {
+        @apply geist-main-heading text-gray-950
+        bg-gray-100 hover:bg-gray-100/90
+        h-10 px-4 py-2
+        inline-flex items-center justify-center gap-2 whitespace-nowrap 
+        rounded-md text-sm font-medium 
+        transition-colors focus-visible:outline-none 
+        focus-visible:ring-2 
+        focus-visible:ring-offset-2 disabled:pointer-events-none 
+        disabled:opacity-50 [&_svg]:pointer-events-none 
+        [&_svg]:size-4 [&_svg]:shrink-0;
+    }
 }

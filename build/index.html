@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Page</title>
+    <title>Automeet</title>
     <link rel="stylesheet" href="css/tailwind.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="../public/favicon.ico">
+    <script src="https://kit.fontawesome.com/a3773279a3.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="bg-black text-gray-300 geist-base overflow-hidden">
@@ -30,31 +32,153 @@
 
                 <!-- Sign In / Sign Up (Right) -->
                 <div class="flex-1 flex justify-end items-center gap-4">
-                    <a href="#" class="hover:text-blue-600">Sign In</a>
-                    <a href="#" class="bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700">Sign Up</a>
+                    <button id="openModal" class="hover:text-blue-600">Sign In</button>
+                    <a href="" class="bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700">Sign Up</a>
                 </div>
 
             </div>
         </div>
     </nav>
 
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="flex flex-col justify-center">
+                <h2 class="mx-auto text-2xl pb-5">Sign In</h2>
+                <form id="signin_form" action="" method="post">
+                    <input class="px-2 py-1 text-sm w-full" id="user_email" placeholder="john@appleseeds.com" required="" />
+                    <br>
+                    <br>
+                    <input class="px-2 py-1 text-sm w-full" id="user_password" type="password" placeholder="Password..." required="" />
+                    <span id="pwd_toggle"><i class="fa-solid fa-eye"></i></span>
+                    <br>
+                    <br>
+                    <button type="submit" class="btn w-24 translate-x-[75%]">Sign In</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="flex flex-col w-screen h-screen justify-center items-center">
         <h1 class="geist-main-heading text-8xl 
             drop-shadow-[0_20px_25px_rgba(69,69,69,1)]">Automeet</h1>
         <p class="geist-base text-xl pb-5">Putting your people together</p>
-        <a class="geist-main-heading text-gray-950
-            bg-gray-100 hover:bg-gray-100/90
-             h-10 px-4 py-2
-            inline-flex items-center justify-center gap-2 whitespace-nowrap 
-            rounded-md text-sm font-medium ring-offset-background 
-            transition-colors focus-visible:outline-none 
-            focus-visible:ring-2 focus-visible:ring-ring 
-            focus-visible:ring-offset-2 disabled:pointer-events-none 
-            disabled:opacity-50 [&_svg]:pointer-events-none 
-            [&_svg]:size-4 [&_svg]:shrink-0" role="button" href="./getstarted">
+        <a class="btn" role="button" href="./getstarted">
             Get Started
         </a>
     </div>
 </body>
 
 </html>
+
+<style> 
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+}
+
+.modal-content {
+    margin: 18% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 0.375rem;
+    width: fit-content; /* Could be more or less, depending on your design */
+    height: fit-content;
+    background-color: rgba(0,0,0,1);
+}
+
+.modal-content input {
+    background-color: black;
+    outline: 1px;
+    border: none;
+    border-bottom: 2px solid gray;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  /*transform: translateX(-180%);*/
+  transform: translateY(-45%);
+}
+
+.close:hover,
+.close:focus {
+  color: rgba(170,170,170,0.8);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#pwd_toggle i {
+    float: right;
+    font-size: 16px;
+    line-height: 1;
+    color: rgba(170,170,170,1.0);
+    transform: translateY(-175%);
+    padding-right: 10px;
+}
+
+#pwd_toggle:hover,
+#pwd_toggle:focus {
+    color: rgba(170,170,170,0.8);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*.fade-in {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}*/
+
+</style> 
+
+<script> 
+    // Get the modal
+const modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+const btn = document.getElementById("openModal");
+
+// Get the <span> element that closes the modal
+const span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  //modal.classList.add("fade-in");
+  modal.style.display = "block";
+};
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+};
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+};
+
+const pwd_field = document.getElementById("user_password");
+const toggle_pwd_view_btn = document.querySelector("#pwd_toggle i");
+
+toggle_pwd_view_btn.onclick = function() {
+    if (pwd_field.getAttribute("type") === "password") {
+        pwd_field.setAttribute("type", "text");
+        toggle_pwd_view_btn.classList.remove("fa-eye");
+        toggle_pwd_view_btn.classList.add("fa-eye-slash");
+    } else {
+        pwd_field.setAttribute("type", "password");
+        toggle_pwd_view_btn.classList.remove("fa-eye-slash");
+        toggle_pwd_view_btn.classList.add("fa-eye");
+    }
+}
+</script>
