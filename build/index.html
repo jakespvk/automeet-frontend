@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Page</title>
+    <link rel="stylesheet" href="css/tailwind.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-black text-gray-300 geist-base overflow-hidden">
+    <nav class="sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+
+                <!-- Logo (Left) -->
+                <div class="flex-1">
+                    <a href="./index" class="text-2xl font-bold underline underline-offset-4">Automeet</a>
+                </div>
+
+                <!-- Centered Links -->
+                <div class="hidden md:flex justify-center gap-8">
+                    <a href="./about" class="hover:text-blue-600">About</a>
+                    <a href="./pricing" class=" hover:text-blue-600">Pricing</a>
+                    <a href="./data" class=" hover:text-blue-600">Your Data</a>
+                </div>
+
+                <!-- Sign In / Sign Up (Right) -->
+                <div class="flex-1 flex justify-end items-center gap-4">
+                    <a href="#" class="hover:text-blue-600">Sign In</a>
+                    <a href="#" class="bg-blue-600 px-4 py-2 rounded-md hover:bg-blue-700">Sign Up</a>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex flex-col w-screen h-screen justify-center items-center">
+        <h1 class="geist-main-heading text-8xl 
+            drop-shadow-[0_20px_25px_rgba(69,69,69,1)]">Automeet</h1>
+        <p class="geist-base text-xl pb-5">Putting your people together</p>
+        <a class="geist-main-heading text-gray-950
+            bg-gray-100 hover:bg-gray-100/90
+             h-10 px-4 py-2
+            inline-flex items-center justify-center gap-2 whitespace-nowrap 
+            rounded-md text-sm font-medium ring-offset-background 
+            transition-colors focus-visible:outline-none 
+            focus-visible:ring-2 focus-visible:ring-ring 
+            focus-visible:ring-offset-2 disabled:pointer-events-none 
+            disabled:opacity-50 [&_svg]:pointer-events-none 
+            [&_svg]:size-4 [&_svg]:shrink-0" role="button" href="./getstarted">
+            Get Started
+        </a>
+    </div>
+</body>
+
+</html>

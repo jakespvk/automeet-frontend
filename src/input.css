@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.geist-main-heading {
+  font-family: "Geist", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+.geist-base {
+  font-family: "Geist", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
