@@ -2,26 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer components {
+    .modal {
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.6); /* Black w/ opacity */
+    }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+    .modal-content {
+        margin: 18% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        border-radius: 0.375rem;
+        width: fit-content; /* Could be more or less, depending on your design */
+        height: fit-content;
+        background-color: rgba(0,0,0,1);
+    }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
+    .modal-content input {
+        background-color: black;
+        outline: 1px;
+        border: none;
+        border-bottom: 2px solid gray;
+    }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        /*transform: translateX(-180%);*/
+        transform: translateY(-45%);
+    }
+
+    .close:hover,
+    .close:focus {
+        color: rgba(170,170,170,0.8);
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    #pwd_toggle i {
+        float: right;
+        font-size: 16px;
+        line-height: 1;
+        color: rgba(170,170,170,1.0);
+        transform: translateY(-175%);
+        padding-right: 10px;
+    }
+
+    #pwd_toggle:hover,
+    #pwd_toggle:focus {
+        color: rgba(170,170,170,0.8);
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /*.fade-in {
+      opacity: 1;
+      transition: opacity 0.5s ease-in-out;
+    }*/
+    .btn {
+        @apply text-gray-950
+        bg-gray-100 hover:bg-gray-100/90
+        h-10 px-4 py-2
+        inline-flex items-center justify-center gap-2 whitespace-nowrap 
+        rounded-md text-sm font-medium 
+        transition-colors focus-visible:outline-none 
+        focus-visible:ring-2 
+        focus-visible:ring-offset-2 disabled:pointer-events-none 
+        disabled:opacity-50 [&_svg]:pointer-events-none 
+        [&_svg]:size-4 [&_svg]:shrink-0;
+    }
+
 }
