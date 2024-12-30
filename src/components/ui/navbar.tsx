@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image"
-import eyeImg from "../../eye.png";
+import eyeImg from "../../../eye.png";
+import eyeSlashImg from "../../../eye-slash.png";
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -25,11 +26,11 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer"
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
-    const eyeRef = useRef<HTMLImageElement | null>(null);
+    const [typePassword, setTypePassword] = useState(true);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -42,23 +43,9 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    function toggleEye() {
-        if (eyeRef !== null) {
-            let passwordInput = document.getElementById("password");
-            let eyeButton = document.getElementById("eyeButton");
-            if (passwordInput !== null && eyeButton !== null) {
-                if (passwordInput.getAttribute("type") === "password") {
-                    passwordInput.setAttribute("type", "text");
-                    eyeButton.classList.remove("fa-eye");
-                    eyeButton.classList.add("fa-eye-slash");
-                } else {
-                    passwordInput.setAttribute("type", "password");
-                    eyeButton.classList.add("fa-eye");
-                    eyeButton.classList.remove("fa-eye-slash");
-                }
-            }
-        }
-    }
+    const togglePasswordVisibility = () => {
+        setTypePassword((prev) => !prev);
+    };
 
     return (
 
@@ -126,10 +113,14 @@ export default function Navbar() {
                                             <Label htmlFor="password" className="text-right">
                                                 Password
                                             </Label>
-                                            <Input id="password" type="password" placeholder="Password..." className="text-gray-950 col-span-3" />
-                                            <span onClick={toggleEye} className="z-[100] translate-x-[21.5rem] -translate-y-11">
-                                                <Image alt="eyes" src={eyeImg} width={18} height={18} id="eyeButton" ref={eyeRef} />
-                                            </span>
+                                            <Input id="password" type={typePassword ? "password" : "text"} placeholder="Password..." className="text-gray-950 col-span-3" />
+                                            <div onClick={togglePasswordVisibility} className="z-[100] translate-x-[21.5rem] -translate-y-11">
+                                                {typePassword ? (
+                                                    <Image alt="eyes" src={eyeImg} width={18} height={18} id="eyeImg" />
+                                                ) : (
+                                                    <Image alt="eyes" src={eyeSlashImg} width={18} height={18} id="eyeSlashImg" />
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                     <DialogFooter>
@@ -140,7 +131,7 @@ export default function Navbar() {
                         </Dialog>
                         <Dialog>
                             <DialogTrigger asChild>
-                                <Button variant="secondary" className="bg-blue-600">Sign Up</Button>
+                                <Button className="px-4 py-2 bg-blue-600 hover:bg-blue-700">Sign Up</Button>
                             </DialogTrigger>
                             <DialogContent className="sm:max-w-[425px] bg-black">
                                 <DialogHeader>
@@ -149,26 +140,32 @@ export default function Navbar() {
                                         Make changes to your profile here. Click save when you're done.
                                     </DialogDescription>
                                 </DialogHeader>
-                                <div className="grid gap-4 py-4">
-                                    <div className="grid grid-cols-4 items-center gap-4">
-                                        <Label htmlFor="name" className="text-right">
-                                            Name
-                                        </Label>
-                                        <Input id="name" value="Pedro Duarte" className="col-span-3" />
+                                <form action="" method="post">
+                                    <div className="grid gap-4 py-4">
+                                        <div className="grid grid-cols-4 items-center gap-4">
+                                            <Label htmlFor="email" className="text-right">
+                                                Email
+                                            </Label>
+                                            <Input id="email" placeholder="john@appleseeds.com" className="text-gray-950 col-span-3" />
+                                        </div>
+                                        <div className="grid grid-cols-4 items-center gap-4">
+                                            <Label htmlFor="password" className="text-right">
+                                                Password
+                                            </Label>
+                                            <Input id="password" type={typePassword ? "password" : "text"} placeholder="Password..." className="text-gray-950 col-span-3" />
+                                            <div onClick={togglePasswordVisibility} className="z-[100] translate-x-[21.5rem] -translate-y-11">
+                                                {typePassword ? (
+                                                    <Image alt="eyes" src={eyeImg} width={18} height={18} id="eyeImg" />
+                                                ) : (
+                                                    <Image alt="eyes" src={eyeSlashImg} width={18} height={18} id="eyeSlashImg" />
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="grid grid-cols-4 items-center gap-4">
-                                        <Label htmlFor="username" className="text-right">
-                                            Username
-                                        </Label>
-                                        <Input id="username" value="@peduarte" className="col-span-3" />
-                                        <span onClick={toggleEye} className="">
-                                            <i id="eyeButton" ref={eyeRef} className="fa-solid fa-eye text-lg text-gray-300"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <DialogFooter>
-                                    <Button type="submit">Save changes</Button>
-                                </DialogFooter>
+                                    <DialogFooter>
+                                        <Button type="submit">Sign Up</Button>
+                                    </DialogFooter>
+                                </form>
                             </DialogContent>
                         </Dialog>
                     </div>
