@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image"
-import eyeImg from "../../../eye.png";
-import eyeSlashImg from "../../../eye-slash.png";
+import eyeImg from "@/public/eye.png";
+import eyeSlashImg from "@/public/eye-slash.png";
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
