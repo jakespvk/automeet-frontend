@@ -1,19 +1,4 @@
 "use client";
-import Image from "next/image"
-import eyeImg from "@/public/eye.png";
-import eyeSlashImg from "@/public/eye-slash.png";
-import { Button } from "@/components/ui/button"
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 
 import {
     Drawer,
@@ -27,10 +12,11 @@ import {
 } from "@/components/ui/drawer"
 
 import { useEffect, useState } from "react";
+import AuthButtons from "./authButtons";
 
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
-    const [typePassword, setTypePassword] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -42,10 +28,6 @@ export default function Navbar() {
 
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
-
-    const togglePasswordVisibility = () => {
-        setTypePassword((prev) => !prev);
-    };
 
     return (
 
@@ -89,86 +71,13 @@ export default function Navbar() {
 
                     {/*<!-- Sign In / Sign Up (Right) -->*/}
                     <div className="hidden flex-1 md:flex justify-end items-center gap-4">
-                        {/*<button onClick={handleOpenModal} className="hover:text-blue-600">Sign In</button > */}
-                        <Dialog>
-                            <DialogTrigger asChild>
-                                <Button className="px-4 py-2 hover:text-blue-600">Sign In</Button>
-                            </DialogTrigger>
-                            <DialogContent className="sm:max-w-[425px] bg-black">
-                                <DialogHeader>
-                                    <DialogTitle>Sign In</DialogTitle>
-                                    <DialogDescription>
-                                        Make changes to your profile here. Click save when you're done.
-                                    </DialogDescription>
-                                </DialogHeader>
-                                <form action="" method="post">
-                                    <div className="grid gap-4 py-4">
-                                        <div className="grid grid-cols-4 items-center gap-4">
-                                            <Label htmlFor="email" className="text-right">
-                                                Email
-                                            </Label>
-                                            <Input id="email" placeholder="john@appleseeds.com" className="text-gray-950 col-span-3" />
-                                        </div>
-                                        <div className="grid grid-cols-4 items-center gap-4">
-                                            <Label htmlFor="password" className="text-right">
-                                                Password
-                                            </Label>
-                                            <Input id="password" type={typePassword ? "password" : "text"} placeholder="Password..." className="text-gray-950 col-span-3" />
-                                            <div onClick={togglePasswordVisibility} className="z-[100] translate-x-[21.5rem] -translate-y-11">
-                                                {typePassword ? (
-                                                    <Image alt="eyes" src={eyeImg} width={18} height={18} id="eyeImg" />
-                                                ) : (
-                                                    <Image alt="eyes" src={eyeSlashImg} width={18} height={18} id="eyeSlashImg" />
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <DialogFooter>
-                                        <Button type="submit">Sign In</Button>
-                                    </DialogFooter>
-                                </form>
-                            </DialogContent>
-                        </Dialog>
-                        <Dialog>
-                            <DialogTrigger asChild>
-                                <Button className="px-4 py-2 bg-blue-600 hover:bg-blue-700">Sign Up</Button>
-                            </DialogTrigger>
-                            <DialogContent className="sm:max-w-[425px] bg-black">
-                                <DialogHeader>
-                                    <DialogTitle>Sign In</DialogTitle>
-                                    <DialogDescription>
-                                        Make changes to your profile here. Click save when you're done.
-                                    </DialogDescription>
-                                </DialogHeader>
-                                <form action="" method="post">
-                                    <div className="grid gap-4 py-4">
-                                        <div className="grid grid-cols-4 items-center gap-4">
-                                            <Label htmlFor="email" className="text-right">
-                                                Email
-                                            </Label>
-                                            <Input id="email" placeholder="john@appleseeds.com" className="text-gray-950 col-span-3" />
-                                        </div>
-                                        <div className="grid grid-cols-4 items-center gap-4">
-                                            <Label htmlFor="password" className="text-right">
-                                                Password
-                                            </Label>
-                                            <Input id="password" type={typePassword ? "password" : "text"} placeholder="Password..." className="text-gray-950 col-span-3" />
-                                            <div onClick={togglePasswordVisibility} className="z-[100] translate-x-[21.5rem] -translate-y-11">
-                                                {typePassword ? (
-                                                    <Image alt="eyes" src={eyeImg} width={18} height={18} id="eyeImg" />
-                                                ) : (
-                                                    <Image alt="eyes" src={eyeSlashImg} width={18} height={18} id="eyeSlashImg" />
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <DialogFooter>
-                                        <Button type="submit">Sign Up</Button>
-                                    </DialogFooter>
-                                </form>
-                            </DialogContent>
-                        </Dialog>
+                        {isLoggedIn ? (
+                            <a href="/{user}/dashboard">Dashboard</a>
+                        ) : (
+                            <AuthButtons />
+                        )}
                     </div>
+
 
                 </div>
             </div >
