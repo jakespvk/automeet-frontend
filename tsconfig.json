@@ -6,7 +6,6 @@
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "target": "ESNext",
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
