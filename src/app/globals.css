@@ -4,7 +4,7 @@
 
 @layer components {
     .glass-card {
-        width: 24rem;
+        width: 64rem;
         height: 40rem;
         /* From https://css.glass */
         background: rgba(155, 155, 155, 0.02);
