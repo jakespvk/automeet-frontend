@@ -3,6 +3,7 @@ import Script from "next/script";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Provider } from "@/components/ui/provider"
 import Navbar from "@/components/ui/navbar";
 
 const geistSans = localFont({
@@ -28,7 +29,7 @@ export default function RootLayout({
 }>) {
 
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <head>
                 <Script src="https://kit.fontawesome.com/a3773279a3.js" crossOrigin="anonymous" />
             </head>
@@ -36,7 +37,11 @@ export default function RootLayout({
                 className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-gray-200`}
             >
                 <Navbar />
-                {children}
+                <Provider>
+                    <div className="w-full min-h-screen bg-repeat bg-[url('../public/background-image.jpg')] -z-10 overflow-hidden">
+                        {children}
+                    </div>
+                </Provider>
             </body>
         </html >
     );

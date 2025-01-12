@@ -31,7 +31,7 @@ export default function Navbar() {
 
     return (
 
-        <nav className={`fixed top-0 left-0 w-full bg-black transition-[box-shadow] duration-700 ease-out ${isScrolled ? 'shadow-lg shadow-gray-900/70' : 'ease-in duration-300'}`}>
+        <nav className={`fixed top-0 left-0 w-full bg-black/0 transition-[box-shadow] duration-700 ease-out ${isScrolled ? 'shadow-lg shadow-gray-900/70 bg-black/100' : 'ease-in duration-300'}`}>
             <div className="max-w-[96rem] mx-auto px-8 py-2">
                 <div className="flex items-center justify-between h-16">
                     {/*<!-- Logo (Left) -->*/}
