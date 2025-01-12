@@ -12,8 +12,7 @@ const Pricing = (props: {}) => {
             <div className="w-full h-svh flex justify-center items-center">
                 <div className="glass-card">
                     <div className="mx-7 my-7">
-                        <h2 className="text-center text-xl">Scaled to your use case,</h2>
-                        <h2 className="text-center text-xl">only pay for what you use</h2>
+                        <h2 className="text-center text-xl">Scaled to your use case, only pay for what you use</h2>
                         <div className="mx-auto w-96 my-7">
                             <br></br>
                             <Slider className="my-7" defaultValue={[40]} max={100} step={1} />
