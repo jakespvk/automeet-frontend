@@ -4,9 +4,8 @@
 
 @layer components {
     .glass-card {
-        width: 64rem;
-        height: 40rem;
-        /* From https://css.glass */
+		max-width: fit-content;
+		max-height: fit-content;
         background: rgba(225, 225, 225, 0.03);
         border-radius: 16px;
         box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
@@ -16,8 +15,7 @@
     }
 
 	.glass-card-contents {
-		margin-top: 3rem;
-		margin-bottom: 3rem;
+		margin: 3rem;
 	}
 
     .modal {
