@@ -31,7 +31,7 @@ const Pricing = (props: {}) => {
 			<div className="w-full h-svh flex justify-center items-center">
 				<div className="glass-card">
 					<div className="glass-card-contents">
-						<h2 className="text-center text-xl">Scaled to your use case, only pay for what you use</h2>
+						<h2 className="text-center text-xl mb-3">Scaled to your use case, only pay for what you use</h2>
 						<div className="mx-auto w-96">
 							<br></br>
 							<label>Number of columns holding descriptive data</label>
