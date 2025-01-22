@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select"
 import { useState } from "react";
 import DatabaseForm from "./DatabaseForm";
+import RequestNewProvider from "./RequestNewProvider";
 
 export default function Dashboard() {
 	const { logout } = useAuth();
@@ -34,11 +35,11 @@ export default function Dashboard() {
 						</Select>
 
 						<div className="my-4">
-							{selectedProvider === 'SQLite' ? <DatabaseForm provider="SQLite" /> : (selectedProvider === 'ActiveCampaign' ? <DatabaseForm provider="ActiveCampaign" /> : <></>)}
+							{selectedProvider === 'SQLite' ? <DatabaseForm provider="SQLite" /> : (selectedProvider === 'ActiveCampaign' ? <DatabaseForm provider="ActiveCampaign" /> : (selectedProvider === 'Other' ? <RequestNewProvider /> : <></>))}
 						</div>
 
 						<div className="flex items-center justify-center">
-							<Button className="mt-7" variant="outline" onClick={logout}>Logout</Button>
+							<Button className="mt-7 btn" onClick={logout}>Logout</Button>
 						</div>
 					</div>
 				</div>
