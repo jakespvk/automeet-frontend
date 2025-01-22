@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
+import { Suspense } from "react";
 import { useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 
@@ -22,5 +23,9 @@ export default function MagicAuth() {
 		authenticate();
 	}, [token, login, router]);
 
-	return <p>Verifying...</p>;
+	return (
+		<Suspense>
+			<p>Verifying...</p>
+		</Suspense>
+	);
 }
