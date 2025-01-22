@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import { useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 
-export default function MagicAuth() {
+function MagicAuth() {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const { login } = useAuth();
@@ -24,8 +24,14 @@ export default function MagicAuth() {
 	}, [token, login, router]);
 
 	return (
-		<Suspense>
-			<p>Verifying...</p>
+		<p>Verifying...</p>
+	);
+}
+
+export default function MagicAuthSuspensed() {
+	return (
+		<Suspense fallback={<p>Loading...</p>}>
+			<MagicAuth />
 		</Suspense>
 	);
 }
