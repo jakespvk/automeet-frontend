@@ -16,8 +16,6 @@ export default function Dashboard() {
 	const { logout } = useAuth();
 	const [selectedProvider, setSelectedProvider] = useState('');
 
-	console.log(selectedProvider);
-
 	return (
 		<div>
 			<div className="w-full h-svh flex justify-center items-center">
@@ -35,7 +33,9 @@ export default function Dashboard() {
 							</SelectContent>
 						</Select>
 
-						{selectedProvider === 'SQLite' ? <DatabaseForm provider="SQLite" /> : (selectedProvider === 'ActiveCampaign' ? <DatabaseForm provider="ActiveCampaign" /> : <></>)}
+						<div className="my-4">
+							{selectedProvider === 'SQLite' ? <DatabaseForm provider="SQLite" /> : (selectedProvider === 'ActiveCampaign' ? <DatabaseForm provider="ActiveCampaign" /> : <></>)}
+						</div>
 
 						<div className="flex items-center justify-center">
 							<Button className="mt-7" variant="outline" onClick={logout}>Logout</Button>
