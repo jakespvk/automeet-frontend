@@ -5,7 +5,7 @@ export default function DatabaseForm({ provider }: { provider: string }) {
 	if (provider === 'SQLite') {
 		providerInstructionLink = 'https://www.sqlite.org/download.html';
 	} else if (provider === 'ActiveCampaign') {
-		providerInstructionLink = 'https://www.activecampaign.com/download/';
+		providerInstructionLink = 'https://help.activecampaign.com/hc/en-us/articles/207317590-Getting-started-with-the-API#h_01HJ6REM2YQW19KYPB189726ST';
 	}
 	function handleSubmit(event: React.FormEvent) {
 		event.preventDefault();
@@ -20,6 +20,7 @@ export default function DatabaseForm({ provider }: { provider: string }) {
 			<h2><strong>Provider:</strong> {provider}</h2>
 			<form id="requestProviderForm">
 				<div className="flex items-center justify-center">
+					<Input className="text-gray-950 mt-2" placeholder="API URL..." />
 					<Input className="text-gray-950 mt-2" placeholder="API Key..." />
 					<Button onClick={handleSubmit} type="submit">Submit</Button>
 				</div>
