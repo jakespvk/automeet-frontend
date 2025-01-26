@@ -1,49 +1,36 @@
 "use client";
-
-import { useAuth } from "@/context/AuthContext";
-import { Button } from "@/components/ui/button";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select"
-import { useState } from "react";
-import DatabaseForm from "./DatabaseForm";
-import RequestNewProvider from "./RequestNewProvider";
+//import { useAuth } from "@/context/AuthContext";
+import NewUserDashboard from "./NewUserDashboard";
+import SQLiteDashboard from "./SQLiteDashboard";
+import ActiveCampaignDashboard from "./ActiveCampaignDashboard";
+import { useEffect } from "react";
 
 export default function Dashboard() {
-	const { logout } = useAuth();
-	const [selectedProvider, setSelectedProvider] = useState('');
+	//const { email, token } = useAuth();
+	const user = undefined;
+	useEffect(() => {
+		async function getUser() {
+			//const response = await fetch(`/dashboard/${email}/${token}`, {
+			const response = await fetch(`http://localhost:8000/dashboard/jakespvk%40gmail.com/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqYWtlc3B2a0BnbWFpbC5jb20iLCJleHAiOjE3Mzc4Njk4NTd9.MZsgR4m2qk8xuqRXJzezgJ-qdba1Hy-wPCSwgmDgyOw`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
 
-	return (
-		<div>
-			<div className="w-full h-svh flex justify-center items-center">
-				<div className="glass-card">
-					<div className="glass-card-contents">
-						<h2 className="text-center text-xl mb-3">Dashboard</h2>
-						<Select value={selectedProvider} onValueChange={setSelectedProvider}>
-							<SelectTrigger className="w-[180px]">
-								<SelectValue placeholder="Select a database provider" />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="SQLite">SQLite</SelectItem>
-								<SelectItem value="ActiveCampaign">ActiveCampaign</SelectItem>
-								<SelectItem value="Other">Other</SelectItem>
-							</SelectContent>
-						</Select>
+			const data = await response.json();
 
-						<div className="my-4">
-							{selectedProvider === 'SQLite' ? <DatabaseForm provider="SQLite" /> : (selectedProvider === 'ActiveCampaign' ? <DatabaseForm provider="ActiveCampaign" /> : (selectedProvider === 'Other' ? <RequestNewProvider /> : <></>))}
-						</div>
+			console.log(data);
+			const user = data.user;
+			return user;
+		}
+	}, [user]);
 
-						<div className="flex items-center justify-center">
-							<Button className="mt-7 btn" onClick={logout}>Logout</Button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div >
-	)
+	let db_provider = undefined;
+	//if (user !== undefined) { db_provider = user.db_provider; }
+
+
+	if (db_provider === undefined) return <NewUserDashboard />;
+	else if (db_provider === 'SQLite') return <SQLiteDashboard />;
+	else if (db_provider === 'ActiveCampaign') return <ActiveCampaignDashboard />;
 }

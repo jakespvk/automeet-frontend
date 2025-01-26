@@ -4,12 +4,16 @@ import { createContext, useContext, useState } from 'react';
 
 interface AuthContextType {
 	isLoggedIn: boolean;
+	token?: string;
+	email?: string;
 	login: (token: string) => Promise<void>;
 	logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
 	isLoggedIn: false,
+	token: undefined,
+	email: undefined,
 	login: async () => { },
 	logout: () => { },
 });
