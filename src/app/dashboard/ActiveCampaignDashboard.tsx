@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import DatabaseForm from "./DatabaseForm";
 import RequestNewProvider from "./RequestNewProvider";
+import DashboardLogoutButton from "./dashboardLogoutButton";
 
 export default function ActiveCampaignDashboard() {
 	const { email, token, logout } = useAuth();
@@ -56,9 +57,7 @@ export default function ActiveCampaignDashboard() {
 							{selectedProvider === 'SQLite' ? <DatabaseForm provider="SQLite" /> : (selectedProvider === 'ActiveCampaign' ? <DatabaseForm provider="ActiveCampaign" /> : (selectedProvider === 'Other' ? <RequestNewProvider /> : <></>))}
 						</div>
 
-						<div className="flex items-center justify-center">
-							<Button className="mt-7 btn" onClick={logout}>Logout</Button>
-						</div>
+						<DashboardLogoutButton />
 					</div>
 				</div>
 			</div>

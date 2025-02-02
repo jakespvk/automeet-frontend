@@ -2,10 +2,21 @@
 
 import { createContext, useContext, useState } from 'react';
 
+type User = {
+	email: string;
+	subscription: boolean;
+	db_type: string;
+	columns: string[];
+	column_limit: number;
+	row_limit: number;
+	login_token: string;
+}
+
 interface AuthContextType {
 	isLoggedIn: boolean;
 	token?: string;
 	email?: string;
+	user?: User;
 	login: (token: string) => Promise<void>;
 	logout: () => void;
 }
@@ -14,6 +25,7 @@ const AuthContext = createContext<AuthContextType>({
 	isLoggedIn: false,
 	token: undefined,
 	email: undefined,
+	user: undefined,
 	login: async () => { },
 	logout: () => { },
 });

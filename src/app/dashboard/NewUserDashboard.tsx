@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import DatabaseForm from "./DatabaseForm";
 import RequestNewProvider from "./RequestNewProvider";
+import DashboardLogoutButton from "./dashboardLogoutButton";
 
 export default function NewUserDashboard() {
 	const { email, token, logout } = useAuth();
@@ -22,7 +23,7 @@ export default function NewUserDashboard() {
 			<div className="w-full h-svh flex justify-center items-center">
 				<div className="glass-card">
 					<div className="glass-card-contents">
-						<h2 className="text-center text-xl mb-3">Dashboard</h2>
+						<h2 className="text-center font-semibold text-2xl mb-9">Dashboard</h2>
 						<Select value={selectedProvider} onValueChange={setSelectedProvider}>
 							<SelectTrigger className="w-[180px]">
 								<SelectValue placeholder="Select a database provider" />
@@ -38,9 +39,7 @@ export default function NewUserDashboard() {
 							{selectedProvider === 'SQLite' ? <DatabaseForm provider="SQLite" /> : (selectedProvider === 'ActiveCampaign' ? <DatabaseForm provider="ActiveCampaign" /> : (selectedProvider === 'Other' ? <RequestNewProvider /> : <></>))}
 						</div>
 
-						<div className="flex items-center justify-center">
-							<Button className="mt-7 btn" onClick={logout}>Logout</Button>
-						</div>
+						{selectedProvider === '' ? <div className="mt-12"><DashboardLogoutButton /></div> : <DashboardLogoutButton />}
 					</div>
 				</div>
 			</div>
