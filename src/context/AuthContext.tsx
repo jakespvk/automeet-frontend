@@ -17,6 +17,7 @@ type User = {
 type AuthContextType = {
 	user: User | null;
 	loading: boolean;
+	checkAuth: () => Promise<void>;
 	// Add other auth-related methods here
 };
 
@@ -27,34 +28,33 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [loading, setLoading] = useState(true);
 
 	// Use the continuous login check logic here
-	useEffect(() => {
-		const checkAuth = async () => {
-			const token = localStorage.getItem("authToken");
-			try {
-				const response = await fetch(`http://localhost:8000/verify?token=${token}`, {});
+	const checkAuth = async () => {
+		const token = localStorage.getItem("authToken");
+		try {
+			const response = await fetch(`http://localhost:8000/verify?token=${token}`, {});
 
-				if (response.ok) {
-					if (token) {
-						localStorage.setItem("authToken", token);
-					}
-					const userData = await response.json();
-					setUser(userData.user);
-				} else {
-					setUser(null);
+			if (response.ok) {
+				if (token) {
+					localStorage.setItem("authToken", token);
 				}
-			} catch (error) {
-				console.error("Error checking auth:", error);
+				const userData = await response.json();
+				setUser(userData.user);
+			} else {
 				setUser(null);
-			} finally {
-				setLoading(false);
 			}
-		};
-
+		} catch (error) {
+			console.error("Error checking auth:", error);
+			setUser(null);
+		} finally {
+			setLoading(false);
+		}
+	};
+	useEffect(() => {
 		// Initial check
 		checkAuth();
 
 		// Set up interval to periodically check auth
-		const interval = setInterval(checkAuth, 5000);
+		const interval = setInterval(checkAuth, 120000);
 
 		return () => {
 			clearInterval(interval);
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	}, []);
 
 	return (
-		<AuthContext.Provider value={{ user, loading }}>
+		<AuthContext.Provider value={{ user, loading, checkAuth }}>
 			{children}
 		</AuthContext.Provider>
 	);

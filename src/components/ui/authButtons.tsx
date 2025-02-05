@@ -33,7 +33,6 @@ export default function AuthButtons() {
 		setIsLoading(true);
 
 		try {
-			console.log("here");
 			const response = await fetch('http://localhost:8000/auth/signin/', {
 				method: 'POST',
 				headers: {

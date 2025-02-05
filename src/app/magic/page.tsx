@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 
 function MagicAuth() {
+	const { checkAuth } = useAuth();
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const token = searchParams.get('token');
@@ -15,6 +16,7 @@ function MagicAuth() {
 		if (!token) return;
 
 		localStorage.setItem('authToken', token);
+		checkAuth();
 		router.replace('/dashboard');
 	}, []);
 

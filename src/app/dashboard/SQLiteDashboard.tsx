@@ -16,17 +16,16 @@ export default function SQLiteDashboard() {
 		if (!user) return;
 		e.preventDefault();
 		setEditMode(false);
-		const apiUrl = e.currentTarget.apiUrl.value;
-		const apiKey = e.currentTarget.apiKey.value;
-		user.api_url = apiUrl;
-		user.api_key = apiKey;
-		console.log(JSON.stringify({ user }));
+		const email = user.email;
+		const api_url = e.currentTarget.apiUrl.value;
+		const api_key = e.currentTarget.apiKey.value;
+		console.log(JSON.stringify({ email, api_url, api_key }));
 		await fetch('http://localhost:8000/set-user-db-details', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ user }),
+			body: JSON.stringify({ email, api_url, api_key }),
 		})
 			.then(response => response.json())
 			.then(data => console.log(data));
