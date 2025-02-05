@@ -17,7 +17,7 @@ import AuthButtons from "./authButtons";
 import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
-	const { isLoggedIn } = useAuth();
+	const { user } = useAuth();
 	const [isScrolled, setIsScrolled] = useState(false);
 
 	useEffect(() => {
@@ -73,8 +73,8 @@ export default function Navbar() {
 
 					{/*<!-- Sign In / Sign Up (Right) -->*/}
 					<div className="hidden flex-1 md:flex justify-end items-center gap-4">
-						{isLoggedIn ? (
-							<a href="/dashboard">Dashboard</a>
+						{user ? (
+							<a role="button" className="btn" href="/dashboard">Dashboard</a>
 						) : (
 							<AuthButtons />
 						)}

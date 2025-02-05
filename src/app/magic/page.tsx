@@ -8,20 +8,15 @@ import { useAuth } from "@/context/AuthContext";
 function MagicAuth() {
 	const searchParams = useSearchParams();
 	const router = useRouter();
-	const { login } = useAuth();
 	const token = searchParams.get('token');
 
 
 	useEffect(() => {
 		if (!token) return;
 
-		const authenticate = async () => {
-			await login(token);
-			router.replace('/dashboard');
-		};
-
-		authenticate();
-	}, [token, login, router]);
+		localStorage.setItem('authToken', token);
+		router.replace('/dashboard');
+	}, []);
 
 	return (
 		<p>Verifying...</p>

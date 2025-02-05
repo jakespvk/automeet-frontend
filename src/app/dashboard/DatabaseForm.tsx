@@ -30,3 +30,4 @@ export default function DatabaseForm({ provider }: { provider: string }) {
 		</div>
 	)
 }
+
