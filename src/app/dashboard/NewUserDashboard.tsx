@@ -1,7 +1,6 @@
 "use client";
 
 import { useAuth } from "@/context/AuthContext";
-import { Button } from "@/components/ui/button";
 import {
 	Select,
 	SelectContent,
@@ -9,14 +8,14 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DatabaseForm from "./DatabaseForm";
 import RequestNewProvider from "./RequestNewProvider";
 import DashboardLogoutButton from "./dashboardLogoutButton";
 
 export default function NewUserDashboard() {
-	const { email, token, logout } = useAuth();
-	const [selectedProvider, setSelectedProvider] = useState('');
+	const { user } = useAuth();
+	const [selectedProvider, setSelectedProvider] = useState(user?.db_type || '');
 
 	return (
 		<div>
