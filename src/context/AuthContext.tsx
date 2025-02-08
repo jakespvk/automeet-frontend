@@ -2,6 +2,8 @@
 
 import { createContext, useContext, ReactNode, useState, useEffect } from "react";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 type User = {
 	email: string;
 	subscription: boolean;
@@ -32,7 +34,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const checkAuth = async () => {
 		const token = localStorage.getItem("authToken");
 		try {
-			const response = await fetch(`/verify?token=${token}`, {});
+			const response = await fetch(`${API_BASE_URL}/verify?token=${token}`, {});
 
 			if (response.ok) {
 				if (token) {

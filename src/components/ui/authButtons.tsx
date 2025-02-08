@@ -18,6 +18,8 @@ import { Label } from "@/components/ui/label"
 
 import { useState, FormEvent } from "react";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export default function AuthButtons() {
 	const [typePassword, setTypePassword] = useState(true);
 	const [email, setEmail] = useState('');
@@ -33,7 +35,7 @@ export default function AuthButtons() {
 		setIsLoading(true);
 
 		try {
-			const response = await fetch('/auth/signin/', {
+			const response = await fetch(`${API_BASE_URL}/auth/signin/`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

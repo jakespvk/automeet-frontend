@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export default function ActiveCampaignDashboard() {
 	const { user } = useAuth();
 	const [editMode, setEditMode] = useState(false);
@@ -20,7 +22,7 @@ export default function ActiveCampaignDashboard() {
 		const api_url = e.currentTarget.apiUrl.value;
 		const api_key = e.currentTarget.apiKey.value;
 		console.log(JSON.stringify({ email, api_url, api_key }));
-		await fetch('/set-user-db-details', {
+		await fetch(`${API_BASE_URL}/set-user-db-details`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

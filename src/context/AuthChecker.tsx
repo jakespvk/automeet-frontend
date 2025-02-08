@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 interface User {
 	email: string;
 	subscription: boolean;
@@ -18,7 +20,7 @@ export default function AuthChecker() {
 		const checkAuth = async () => {
 			const token = localStorage.getItem("authToken");
 			try {
-				const response = await fetch(`/verify?token=${token}`, {});
+				const response = await fetch(`${API_BASE_URL}/verify?token=${token}`, {});
 
 				if (response.ok) {
 					const data = await response.json();
