@@ -47,8 +47,8 @@ export default function SQLiteDashboard() {
 					</form>
 					:
 					<>
-						<Input disabled className="text-gray-950 mt-3" id="apiUrl" placeholder="API URL..." value={user?.db_type} />
-						<Input disabled className="text-gray-950 mt-5" id="apiKey" placeholder="API Key..." value={user?.db_type} />
+						<Input disabled className="text-gray-950 mt-3" id="apiUrl" placeholder="API URL..." value={user?.api_url} />
+						<Input disabled className="text-gray-950 mt-5" id="apiKey" placeholder="API Key..." value={user?.api_key} />
 						<p className="my-2 ml-1 text-sm">Instructions for <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
 						<div className="flex items-center justify-center">
 							<Button className="btn mt-3 w-36" onClick={() => setEditMode(true)}>Edit</Button>
