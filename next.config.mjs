@@ -3,12 +3,12 @@ const nextConfig = {
 	env: {
 		NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
 	},
-	async rewrites() {
+	async redirects() {
 		return [
 			{
 				source: '/:path*',
 				destination: `${process.env.NEXT_PUBLIC_API_BASE_URL}/:path*`,
-				permanent: true,
+				permanent: false,
 			},
 		];
 	},
