@@ -20,7 +20,7 @@ export default function SQLiteDashboard() {
 		const api_url = e.currentTarget.apiUrl.value;
 		const api_key = e.currentTarget.apiKey.value;
 		console.log(JSON.stringify({ email, api_url, api_key }));
-		await fetch('http://localhost:8000/set-user-db-details', {
+		await fetch('/set-user-db-details', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

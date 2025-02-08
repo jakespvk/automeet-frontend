@@ -33,7 +33,7 @@ export default function AuthButtons() {
 		setIsLoading(true);
 
 		try {
-			const response = await fetch('http://localhost:8000/auth/signin/', {
+			const response = await fetch('/auth/signin/', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const checkAuth = async () => {
 		const token = localStorage.getItem("authToken");
 		try {
-			const response = await fetch(`http://localhost:8000/verify?token=${token}`, {});
+			const response = await fetch(`/verify?token=${token}`, {});
 
 			if (response.ok) {
 				if (token) {

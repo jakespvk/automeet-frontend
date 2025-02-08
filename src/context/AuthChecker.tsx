@@ -18,7 +18,7 @@ export default function AuthChecker() {
 		const checkAuth = async () => {
 			const token = localStorage.getItem("authToken");
 			try {
-				const response = await fetch(`http://localhost:8000/verify?token=${token}`, {});
+				const response = await fetch(`/verify?token=${token}`, {});
 
 				if (response.ok) {
 					const data = await response.json();
