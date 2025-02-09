@@ -9,6 +9,7 @@ type User = {
 	subscription: boolean;
 	db_type: string;
 	columns: string[];
+	active_columns: string[];
 	column_limit: number;
 	row_limit: number;
 	login_token: string;

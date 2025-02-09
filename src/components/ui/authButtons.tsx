@@ -69,7 +69,7 @@ export default function AuthButtons() {
 						<DialogHeader>
 							<DialogTitle>Sign In</DialogTitle>
 							<DialogDescription>
-								Make changes to your profile here. Click save when you're done.
+								Enter your email and a link will be sent to log you in.
 							</DialogDescription>
 						</DialogHeader>
 						<div className="grid gap-4 py-4">
@@ -84,38 +84,6 @@ export default function AuthButtons() {
 									placeholder="john@appleseeds.com"
 									className="text-gray-950 col-span-3"
 								/>
-							</div>
-							<div className="grid grid-cols-4 items-center gap-4">
-								<Label htmlFor="password" className="text-right">
-									Password
-								</Label>
-								<Input
-									id="password"
-									type={typePassword ? "password" : "text"}
-									placeholder="Password..."
-									className="text-gray-950 col-span-3"
-								/>
-								<div onClick={togglePasswordVisibility}
-									className="z-[100] translate-x-[21.5rem] -translate-y-11"
-								>
-									{typePassword ? (
-										<Image
-											alt="eyes"
-											src={eyeImg}
-											width={18}
-											height={18}
-											id="eyeImg"
-										/>
-									) : (
-										<Image
-											alt="eyes"
-											src={eyeSlashImg}
-											width={18}
-											height={18}
-											id="eyeSlashImg"
-										/>
-									)}
-								</div>
 							</div>
 						</div>
 						<DialogFooter>
