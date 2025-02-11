@@ -4,6 +4,14 @@ import DashboardLogoutButton from "./dashboardLogoutButton";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+	SelectLabel,
+} from "@/components/ui/select"
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
 
@@ -12,6 +20,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 export default function ActiveCampaignDashboard() {
 	const { user } = useAuth();
 	const [editMode, setEditMode] = useState(false);
+	const [pollFrequency, setPollFrequency] = useState(user?.poll_frequency);
 	const provider = "ActiveCampaign";
 	const providerInstructionLink = 'https://help.activecampaign.com/hc/en-us/articles/207317590-Getting-started-with-the-API#h_01HJ6REM2YQW19KYPB189726ST';
 
@@ -31,6 +40,7 @@ export default function ActiveCampaignDashboard() {
 		setEditMode(false);
 		user.api_url = e.currentTarget.apiUrl.value;
 		user.api_key = e.currentTarget.apiKey.value;
+		user.poll_frequency = e.currentTarget.pollFrequency.value;
 		console.log(JSON.stringify({ user }));
 		await fetch(`${API_BASE_URL}/set-user-db-details`, {
 			method: 'POST',
@@ -50,9 +60,9 @@ export default function ActiveCampaignDashboard() {
 				{editMode
 					?
 					<form onSubmit={(e) => handleSubmit(e)}>
-						<Input className="text-gray-950 mt-3" id="apiUrl" placeholder="API URL..." />
-						<Input className="text-gray-950 mt-5" id="apiKey" placeholder="API Key..." />
-						<p className="my-2 ml-1 text-sm">Instructions for <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
+						<Input className="text-gray-950 mt-3" id="apiUrl" placeholder="API URL..." defaultValue={user?.api_url} />
+						<Input className="text-gray-950 mt-5" id="apiKey" placeholder="API Key..." defaultValue={user?.api_key} />
+						<p className="mt-2 mb-3 ml-1 text-sm">Instructions for <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
 						{user?.columns.map((column) => (
 							<div className="flex items-center justify-start my-2 ml-4">
 								<Checkbox
@@ -64,23 +74,49 @@ export default function ActiveCampaignDashboard() {
 								<label className="ml-2" htmlFor={column}>{column}</label>
 							</div>
 						))}
-						<div className="flex items-center justify-center">
-							<Button className="btn my-3 w-36" type="submit">Save</Button>
+						<div className="flex grow items-baseline align-center mx-4">
+							<label htmlFor="pollFrequency" className="text-gray-300 mt-3 mr-auto">Poll Frequency:</label>
+							<Select value={pollFrequency} defaultValue={pollFrequency} onValueChange={(value) => setPollFrequency(value)}>
+								<SelectTrigger className="min-w-[180px] max-w-[65%] my-4">
+									<SelectValue placeholder="Select a poll frequency" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="Daily">Daily</SelectItem>
+									<SelectItem value="Weekly">Weekly</SelectItem>
+									<SelectItem value="Monthly">Monthly</SelectItem>
+								</SelectContent>
+							</Select>
+						</div>
+						<div className="flex items-center justify-center mt-5 mb-3">
+							<Button className="btn w-36" type="submit">Save</Button>
 						</div>
 					</form>
 					:
 					<>
 						<Input disabled className="text-gray-950 mt-3 disabled:text-neutral-50" id="apiUrl" placeholder="API URL..." value={user?.api_url} />
 						<Input disabled className="text-gray-950 mt-5 disabled:text-neutral-50" id="apiKey" placeholder="API Key..." value={user?.api_key} />
-						<p className="mt-2 mb-4 ml-1 text-sm">Instructions for <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
+						<p className="mt-2 mb-3 ml-1 text-sm">Instructions for <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
 						{user?.columns.map((column) => (
 							<div className="flex items-center justify-start my-2 ml-4">
 								<Checkbox className="disabled:bg-neutral-500" defaultChecked={(user?.active_columns.includes(column)) ? true : false} disabled id={column} />
 								<label className="ml-2" htmlFor={column}>{column}</label>
 							</div>
 						))}
-						<div className="flex items-center justify-center mt-4">
-							<Button className="btn my-3 w-36" onClick={() => setEditMode(true)}>Edit</Button>
+						<div className="flex grow items-baseline align-center mx-4">
+							<label htmlFor="pollFrequency" className="text-gray-300 mt-3 mr-auto">Poll Frequency:</label>
+							<Select disabled value={pollFrequency} defaultValue={pollFrequency} onValueChange={(value) => setPollFrequency(value)}>
+								<SelectTrigger className="min-w-[180px] max-w-[65%] my-4">
+									<SelectValue placeholder="Select a poll frequency" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="Daily">Daily</SelectItem>
+									<SelectItem value="Weekly">Weekly</SelectItem>
+									<SelectItem value="Monthly">Monthly</SelectItem>
+								</SelectContent>
+							</Select>
+						</div>
+						<div className="flex items-center justify-center mt-5 mb-3">
+							<Button className="btn w-36" onClick={() => setEditMode(true)}>Edit</Button>
 						</div>
 					</>
 				}

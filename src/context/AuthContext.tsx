@@ -15,6 +15,7 @@ type User = {
 	login_token: string;
 	api_url: string;
 	api_key: string;
+	poll_frequency: string;
 }
 
 type AuthContextType = {
