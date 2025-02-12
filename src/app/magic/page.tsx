@@ -27,7 +27,11 @@ function MagicAuth() {
 
 export default function MagicAuthSuspensed() {
 	return (
-		<Suspense fallback={<p>Loading...</p>}>
+		<Suspense
+			fallback={<div
+				className="flex justify-center items-center h-svh w-full">
+				Loading...
+			</div>}>
 			<MagicAuth />
 		</Suspense>
 	);

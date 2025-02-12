@@ -21,14 +21,14 @@ import { useState, FormEvent } from "react";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function AuthButtons() {
-	const [typePassword, setTypePassword] = useState(true);
+	// const [typePassword, setTypePassword] = useState(true);
 	const [email, setEmail] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLoginEmailSent, setIsLoginEmailSent] = useState(false);
 
-	const togglePasswordVisibility = () => {
-		setTypePassword((prev) => !prev);
-	};
+	// const togglePasswordVisibility = () => {
+	// 	setTypePassword((prev) => !prev);
+	// };
 
 	async function handleSignIn(event: FormEvent) {
 		event.preventDefault();
@@ -36,6 +36,34 @@ export default function AuthButtons() {
 
 		try {
 			const response = await fetch(`${API_BASE_URL}/auth/signin/`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ email }),
+			});
+
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.detail || 'Failed to send magic link');
+			}
+
+			const data = await response.json();
+			console.log('Success:', data.message);
+			setIsLoginEmailSent(true);
+		} catch (error) {
+			console.error('Error:', error);
+		} finally {
+			setIsLoading(false);
+		}
+	}
+
+	async function handleSignUp(event: FormEvent) {
+		event.preventDefault();
+		setIsLoading(true);
+
+		try {
+			const response = await fetch(`${API_BASE_URL}/auth/signup/`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -106,10 +134,10 @@ export default function AuthButtons() {
 					<DialogHeader>
 						<DialogTitle>Sign In</DialogTitle>
 						<DialogDescription>
-							Make changes to your profile here. Click save when you're done.
+							Enter your email to sign up, a link will be sent to log you in.
 						</DialogDescription>
 					</DialogHeader>
-					<form action="" method="post">
+					<form onSubmit={handleSignUp}>
 						<div className="grid gap-4 py-4">
 							<div className="grid grid-cols-4 items-center gap-4">
 								<Label htmlFor="email" className="text-right">
@@ -117,7 +145,7 @@ export default function AuthButtons() {
 								</Label>
 								<Input id="email" placeholder="john@appleseeds.com" className="text-gray-950 col-span-3" />
 							</div>
-							<div className="grid grid-cols-4 items-center gap-4">
+							{/*<div className="grid grid-cols-4 items-center gap-4">
 								<Label htmlFor="password" className="text-right">
 									Password
 								</Label>
@@ -129,10 +157,16 @@ export default function AuthButtons() {
 										<Image alt="eyes" src={eyeSlashImg} width={18} height={18} id="eyeSlashImg" />
 									)}
 								</div>
-							</div>
+							</div>*/}
 						</div>
 						<DialogFooter>
-							<Button type="submit">Sign Up</Button>
+							<Button
+								type="submit"
+								disabled={isLoading}
+								className={isLoginEmailSent ? 'text-green-500' : ''}
+							>
+								{isLoginEmailSent ? 'Email Sent!' : (isLoading ? 'Sending...' : 'Sign Up')}
+							</Button>
 						</DialogFooter>
 					</form>
 				</DialogContent>
