@@ -20,7 +20,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 export default function ActiveCampaignDashboard() {
 	const { user } = useAuth();
 	const [editMode, setEditMode] = useState(false);
-	const [pollFrequency, setPollFrequency] = useState(user?.poll_frequency);
+	const [pollFrequency, setPollFrequency] = useState(user?.poll_frequency) || "Monthly";
 	const provider = "ActiveCampaign";
 	const providerInstructionLink = 'https://help.activecampaign.com/hc/en-us/articles/207317590-Getting-started-with-the-API#h_01HJ6REM2YQW19KYPB189726ST';
 
@@ -40,7 +40,9 @@ export default function ActiveCampaignDashboard() {
 		setEditMode(false);
 		user.api_url = e.currentTarget.apiUrl.value;
 		user.api_key = e.currentTarget.apiKey.value;
-		user.poll_frequency = e.currentTarget.pollFrequency.value;
+		if (pollFrequency !== undefined) {
+			user.poll_frequency = pollFrequency;
+		}
 		console.log(JSON.stringify({ user }));
 		await fetch(`${API_BASE_URL}/set-user-db-details`, {
 			method: 'POST',
@@ -55,73 +57,89 @@ export default function ActiveCampaignDashboard() {
 
 	return (
 		<div className="flex flex-col items-center justify-center h-screen">
-			<div className="w-[400px] mt-5">
-				<h2><strong>Provider:</strong> {provider}</h2>
-				{editMode
-					?
-					<form onSubmit={(e) => handleSubmit(e)}>
-						<Input className="text-gray-950 mt-3" id="apiUrl" placeholder="API URL..." defaultValue={user?.api_url} />
-						<Input className="text-gray-950 mt-5" id="apiKey" placeholder="API Key..." defaultValue={user?.api_key} />
-						<p className="mt-2 mb-3 ml-1 text-sm">Instructions for <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
-						{user?.columns.map((column) => (
-							<div className="flex items-center justify-start my-2 ml-4">
-								<Checkbox
-									className="disabled:bg-neutral-500"
-									defaultChecked={(user?.active_columns.includes(column)) ? true : false}
-									onCheckedChange={(checked) => handleColumnChange(column, checked)}
-									id={column}
-								/>
-								<label className="ml-2" htmlFor={column}>{column}</label>
+			<div className="glass-card p-10">
+				<div className="w-[400px]">
+					<h1 className="text-4xl text-center mb-7">Dashboard</h1>
+					<h2 className="mb-1 text-lg"><strong>Provider:</strong> {provider}</h2>
+					{editMode
+						?
+						<form onSubmit={(e) => handleSubmit(e)}>
+							<div className="flex items-baseline justify-start align-center">
+								<label htmlFor="apiUrl" className="text-gray-300 mr-auto">API URL:</label>
+								<Input className="text-gray-950 mt-4 w-[80%]" id="apiUrl" placeholder="API URL..." defaultValue={user?.api_url} />
 							</div>
-						))}
-						<div className="flex grow items-baseline align-center mx-4">
-							<label htmlFor="pollFrequency" className="text-gray-300 mt-3 mr-auto">Poll Frequency:</label>
-							<Select value={pollFrequency} defaultValue={user?.poll_frequency} onValueChange={(value) => setPollFrequency(value)}>
-								<SelectTrigger className="min-w-[180px] max-w-[65%] my-4">
-									<SelectValue placeholder="Select a poll frequency" />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectItem value="Daily">Daily</SelectItem>
-									<SelectItem value="Weekly">Weekly</SelectItem>
-									<SelectItem value="Monthly">Monthly</SelectItem>
-								</SelectContent>
-							</Select>
-						</div>
-						<div className="flex items-center justify-center mt-5 mb-3">
-							<Button className="btn w-36" type="submit">Save</Button>
-						</div>
-					</form>
-					:
-					<>
-						<Input disabled className="text-gray-950 mt-3 disabled:text-neutral-50" id="apiUrl" placeholder="API URL..." value={user?.api_url} />
-						<Input disabled className="text-gray-950 mt-5 disabled:text-neutral-50" id="apiKey" placeholder="API Key..." value={user?.api_key} />
-						<p className="mt-2 mb-3 ml-1 text-sm">Instructions for <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
-						{user?.columns.map((column) => (
-							<div className="flex items-center justify-start my-2 ml-4">
-								<Checkbox className="disabled:bg-neutral-500" defaultChecked={(user?.active_columns.includes(column)) ? true : false} disabled id={column} />
-								<label className="ml-2" htmlFor={column}>{column}</label>
+							<div className="flex items-baseline justify-start mt-4 align-center">
+								<label htmlFor="apiKey" className="text-gray-300 mr-auto">API Key:</label>
+								<Input className="text-gray-950 w-[80%]" id="apiKey" placeholder="API Key..." defaultValue={user?.api_key} />
 							</div>
-						))}
-						<div className="flex grow items-baseline align-center mx-4">
-							<label htmlFor="pollFrequency" className="text-gray-300 mt-3 mr-auto">Poll Frequency:</label>
-							<Select disabled value={pollFrequency} defaultValue={user?.poll_frequency} onValueChange={(value) => setPollFrequency(value)}>
-								<SelectTrigger className="min-w-[180px] max-w-[65%] my-4">
-									<SelectValue placeholder="Select a poll frequency" />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectItem value="Daily">Daily</SelectItem>
-									<SelectItem value="Weekly">Weekly</SelectItem>
-									<SelectItem value="Monthly">Monthly</SelectItem>
-								</SelectContent>
-							</Select>
-						</div>
-						<div className="flex items-center justify-center mt-5 mb-3">
-							<Button className="btn w-36" onClick={() => setEditMode(true)}>Edit</Button>
-						</div>
-					</>
-				}
+							<p className="mt-2 mb-5 ml-[20%] text-sm">Instructions for <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
+							<label className="text-gray-300 mr-auto">Columns:</label>
+							{
+								user?.columns.map((column: string) => (
+									<div className="flex items-center justify-start my-2 ml-2">
+										<Checkbox className="disabled:bg-neutral-500 ml-4" defaultChecked={(user?.active_columns.includes(column)) ? true : false} id={column} />
+										<label className="ml-2" htmlFor={column}>{column}</label>
+									</div>
+								))
+							}
+							<div className="flex grow items-baseline align-center">
+								<label htmlFor="pollFrequency" className="text-gray-300 mr-auto">Poll Frequency:</label>
+								<Select value={user?.poll_frequency} defaultValue={user?.poll_frequency} onValueChange={(value) => { setPollFrequency(value) }}>
+									<SelectTrigger className="min-w-[180px] max-w-[68%] mt-4 mb-4">
+										<SelectValue placeholder="Select a poll frequency" />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectItem value="Daily">Daily</SelectItem>
+										<SelectItem value="Weekly">Weekly</SelectItem>
+										<SelectItem value="Monthly">Monthly</SelectItem>
+									</SelectContent>
+								</Select>
+							</div>
+							<div className="flex items-center justify-center mt-5 mb-3">
+								<Button className="btn w-36" type="submit">Save</Button>
+							</div>
+						</form>
+						:
+						<>
+							<div className="flex items-baseline justify-start align-center">
+								<label htmlFor="apiUrl" className="text-gray-300 mr-auto">API URL:</label>
+								<Input disabled className="text-gray-950 mt-4 w-[80%]" id="apiUrl" placeholder="API URL..." defaultValue={user?.api_url} />
+							</div>
+							<div className="flex items-baseline justify-start mt-4 align-center">
+								<label htmlFor="apiKey" className="text-gray-300 mr-auto">API Key:</label>
+								<Input disabled className="text-gray-950 w-[80%]" id="apiKey" placeholder="API Key..." defaultValue={user?.api_key} />
+							</div>
+							<p className="mt-2 mb-5 ml-[20%] text-sm">Instructions for <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
+							<label className="text-gray-300 mr-auto">Columns:</label>
+							{
+								user?.columns.map((column: string) => (
+									<div className="flex items-center justify-start my-2 ml-2">
+										<Checkbox disabled className="disabled:bg-neutral-500 ml-4" defaultChecked={(user?.active_columns.includes(column)) ? true : false} id={column} />
+										<label className="ml-2" htmlFor={column}>{column}</label>
+									</div>
+								))
+							}
+							<div className="flex grow items-baseline align-center">
+								<label htmlFor="pollFrequency" className="text-gray-300 mr-auto">Poll Frequency:</label>
+								<Select disabled value={user?.poll_frequency} defaultValue={user?.poll_frequency} onValueChange={(value) => { setPollFrequency(value) }}>
+									<SelectTrigger className="min-w-[180px] max-w-[68%] mt-4 mb-4">
+										<SelectValue placeholder="Select a poll frequency" />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectItem value="Daily">Daily</SelectItem>
+										<SelectItem value="Weekly">Weekly</SelectItem>
+										<SelectItem value="Monthly">Monthly</SelectItem>
+									</SelectContent>
+								</Select>
+							</div>
+							<div className="flex items-center justify-center mt-5 mb-3">
+								<Button className="btn w-36" onClick={() => setEditMode(true)}>Edit</Button>
+							</div>
+						</>
+					}
+				</div>
+				<DashboardLogoutButton />
 			</div>
-			<DashboardLogoutButton />
 		</div >
 	)
 }
