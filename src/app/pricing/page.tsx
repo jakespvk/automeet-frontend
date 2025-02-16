@@ -43,6 +43,10 @@ const Pricing = (props: {}) => {
 		alert("Purchased ... jk, wip");
 	}
 
+	function handleContactForEnterprise() {
+		alert("Contacted ... jk, wip");
+	}
+
 	function reset() {
 		setColumns([5]);
 		setRows([50]);
@@ -76,7 +80,12 @@ const Pricing = (props: {}) => {
 							</div>
 							<div className="mt-7 mx-12 flex justify-around items-center">
 								<Button variant="outline" className="w-32 hover:bg-gray-200/10" onClick={reset}>Reset</Button>
-								<Button className="w-32 bg-blue-600 hover:bg-blue-700" onClick={handlePurchase}>Let's do it</Button>
+								{(PRICE === "Enterprise")
+									?
+									<Button className="w-32 bg-blue-600 hover:bg-blue-700" onClick={handleContactForEnterprise}>Contact Me</Button>
+									:
+									<Button className="w-32 bg-blue-600 hover:bg-blue-700" onClick={handlePurchase}>Let's do it</Button>
+								}
 							</div>
 						</div>
 					</div>
