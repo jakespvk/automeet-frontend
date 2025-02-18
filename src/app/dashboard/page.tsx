@@ -12,7 +12,7 @@ export default function Dashboard() {
 
 
 	if (!user) return <div className="flex items-center justify-center h-screen">Not logged in</div>;
-	if (db_provider === undefined) return <NewUserDashboard />;
+	if (db_provider === undefined || db_provider === '') return <NewUserDashboard />;
 	else if (db_provider === 'SQLite') return <SQLiteDashboard />;
 	else if (db_provider === 'ActiveCampaign') return <ActiveCampaignDashboard />;
 }

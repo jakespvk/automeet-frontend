@@ -1,7 +1,11 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-export default function DatabaseForm({ provider }: { provider: string }) {
+import { useAuth } from "@/context/AuthContext";
 
+export default function DatabaseForm({ provider }: { provider: string }) {
+	const user = useAuth().user;
+
+	if (!user) return;
 	let providerInstructionLink = "";
 	if (provider === 'SQLite') {
 		providerInstructionLink = 'https://www.sqlite.org/download.html';
@@ -9,11 +13,24 @@ export default function DatabaseForm({ provider }: { provider: string }) {
 		providerInstructionLink = 'https://help.activecampaign.com/hc/en-us/articles/207317590-Getting-started-with-the-API#h_01HJ6REM2YQW19KYPB189726ST';
 	}
 
-	function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-		const apiUrl = e.currentTarget.apiUrl.value;
-		const apiKey = e.currentTarget.apiKey.value;
-		console.log(apiUrl, apiKey);
+	const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+		// e.preventDefault();
+		const db_type = provider;
+		const api_url = e.currentTarget.apiUrl.value;
+		const api_key = e.currentTarget.apiKey.value;
+		if (!user) return;
+		const email = user.email;
+		const response = await fetch(`${API_BASE_URL}/setup-subscription`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ email, db_type, api_url, api_key }),
+		})
+			.then(response => response.json())
+			.then(data => console.log(data));
+		console.log(response);
 	}
 
 	return (
