@@ -85,7 +85,7 @@ export default function ActiveCampaignDashboard() {
 							}
 							<div className="flex grow items-baseline align-center">
 								<label htmlFor="pollFrequency" className="text-gray-300 mr-auto">Poll Frequency:</label>
-								<Select value={user?.poll_frequency} defaultValue={user?.poll_frequency} onValueChange={(value) => { setPollFrequency(value) }}>
+								<Select value={pollFrequency} defaultValue={user?.poll_frequency} onValueChange={(value) => { setPollFrequency(value) }}>
 									<SelectTrigger className="max-w-48 md:min-w-[180px] md:max-w-[68%] mt-4 mb-4">
 										<SelectValue placeholder="Select a poll frequency" />
 									</SelectTrigger>
