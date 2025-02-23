@@ -3,7 +3,7 @@
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-const Pricing = (props: {}) => {
+const Pricing = () => {
 	const [columns, setColumns] = useState([5]);
 	const [rows, setRows] = useState([50]);
 	const [pollFrequency, setPollFrequency] = useState([1]);
@@ -24,7 +24,7 @@ const Pricing = (props: {}) => {
 			if (pollFrequency === 0) {
 				price /= 6.34;
 			}
-			return "$" + Math.round(price * factor) / factor;
+			return "$" + (Math.round(price * factor) / factor) + "/month";
 		}
 	}
 
@@ -53,15 +53,14 @@ const Pricing = (props: {}) => {
 		setPollFrequency([1]);
 	}
 
-
-
 	return (
-		<div>
-			<div className="w-full h-svh flex justify-center items-center">
-				<div className="glass-card">
-					<div className="glass-card-contents">
-						<h2 className="text-center text-xl mb-3">Scaled to your use case, only pay for what you use</h2>
-						<div className="mx-auto w-96">
+		<div className="@container">
+			<div className="w-full h-20 min-[385px]:hidden"></div>
+			<div className="w-full min-[385px]:h-svh flex justify-center items-center [(min-width:350px)]:h-svh">
+				<div className="md:glass-card">
+					<div className="md:glass-card-contents">
+						<h2 className="md:text-center text-xl mb-3 text-pretty mx-8 md:mx-auto">Scaled to your use case, only pay for what you use</h2>
+						<div className="md:w-96 md:mx-auto mx-8 w-56 min-w-fit text-pretty">
 							<br></br>
 							<label>Number of columns holding descriptive data</label>
 							<Slider className="my-4" value={columns} onValueChange={setColumns} defaultValue={columns} max={26} step={1} />
@@ -78,7 +77,7 @@ const Pricing = (props: {}) => {
 								<strong>Your price:&nbsp;</strong>
 								{calculatePrice(columns[0], rows[0], pollFrequency[0])}
 							</div>
-							<div className="mt-7 mx-12 flex justify-around items-center">
+							<div className="mt-7 mb-8 md:mx-12 flex justify-evenly md:justify-around items-center">
 								<Button variant="outline" className="w-32 hover:bg-gray-200/10" onClick={reset}>Reset</Button>
 								{(PRICE === "Enterprise")
 									?
