@@ -90,7 +90,7 @@ export default function AuthButtons() {
 		<>
 			<Dialog>
 				<DialogTrigger asChild>
-					<Button className="px-4 py-2 hover:text-blue-600">Sign In</Button>
+					<Button className="border text-center bg-gray-300 text-gray-950 w-24 px-2 py-1 rounded-md md:px-4 md:py-2 md:hover:text-blue-600">Sign In</Button>
 				</DialogTrigger>
 				<DialogContent className="sm:max-w-[425px] bg-black">
 					<form onSubmit={handleSignIn}>
@@ -128,12 +128,12 @@ export default function AuthButtons() {
 			</Dialog >
 			<Dialog>
 				<DialogTrigger asChild>
-					<Button className="px-4 py-2 bg-blue-600 hover:bg-blue-700">Sign Up</Button>
+					<Button className="border text-center w-24 px-2 py-1 rounded-md md:border-0 md:px-4 md:py-2 md:bg-blue-600 md:hover:bg-blue-700">Sign Up</Button>
 				</DialogTrigger>
 				<DialogContent className="sm:max-w-[425px] bg-black">
 					<DialogHeader>
-						<DialogTitle>Sign In</DialogTitle>
-						<DialogDescription>
+						<DialogTitle>Sign Up</DialogTitle>
+						<DialogDescription className="text-pretty">
 							Enter your email to sign up, a link will be sent to log you in.
 						</DialogDescription>
 					</DialogHeader>
@@ -170,7 +170,7 @@ export default function AuthButtons() {
 						</DialogFooter>
 					</form>
 				</DialogContent>
-			</Dialog>
+			</Dialog >
 		</>
 	)
 };

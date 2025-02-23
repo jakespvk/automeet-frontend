@@ -55,8 +55,9 @@ export default function Navbar() {
 									<a href="/data">Your Data</a>
 									<DrawerClose className="pt-5">
 										<div className="pt-5 pb-5 text-base space-x-3 flex justify-center">
-											<a className="border text-center bg-gray-300 text-gray-950 w-24 px-2 py-1 rounded-md">Sign In</a>
-											<a className="border text-center w-24 px-2 py-1 rounded-md">Sign Up</a>
+											<AuthButtons />
+											{/*<a className="border text-center bg-gray-300 text-gray-950 w-24 px-2 py-1 rounded-md">Sign In</a>
+											<a className="border text-center w-24 px-2 py-1 rounded-md">Sign Up</a>*/}
 										</div>
 									</DrawerClose>
 								</DrawerFooter>
