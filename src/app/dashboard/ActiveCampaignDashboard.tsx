@@ -56,23 +56,24 @@ export default function ActiveCampaignDashboard() {
 	}
 
 	return (
-		<div className="flex flex-col items-center justify-center h-screen">
-			<div className="glass-card p-10">
-				<div className="w-[400px]">
-					<h1 className="text-4xl text-center mb-7">Dashboard</h1>
-					<h2 className="mb-1 text-lg"><strong>Provider:</strong> {provider}</h2>
+		<div className="flex flex-col items-center justify-center h-rsvh md:h-svh overflow-y-auto overflow-x-clip">
+			<div className="md:hidden w-screen h-14"></div>
+			<div className="md:glass-card p-10">
+				<div className="md:w-[400px]">
+					<h1 className="text-2xl md:text-4xl text-center mb-7">Dashboard</h1>
+					<h2 className="mb-1 md:text-lg"><strong>Provider:</strong> {provider}</h2>
 					{editMode
 						?
 						<form onSubmit={(e) => handleSubmit(e)}>
 							<div className="flex items-baseline justify-start align-center">
-								<label htmlFor="apiUrl" className="text-gray-300 mr-auto">API URL:</label>
-								<Input className="text-gray-950 mt-4 w-[80%]" id="apiUrl" placeholder="API URL..." defaultValue={user?.api_url} />
+								<label htmlFor="apiUrl" className="text-gray-300 mr-auto text-nowrap">API URL:</label>
+								<Input className="text-gray-950 mt-4 md:w-[80%] w-fit ml-2" id="apiUrl" placeholder="API URL..." defaultValue={user?.api_url} />
 							</div>
 							<div className="flex items-baseline justify-start mt-4 align-center">
-								<label htmlFor="apiKey" className="text-gray-300 mr-auto">API Key:</label>
-								<Input className="text-gray-950 w-[80%]" id="apiKey" placeholder="API Key..." defaultValue={user?.api_key} />
+								<label htmlFor="apiKey" className="text-gray-300 mr-auto text-nowrap">API Key:</label>
+								<Input className="text-gray-950 md:w-[80%] w-fit ml-2" id="apiKey" placeholder="API Key..." defaultValue={user?.api_key} />
 							</div>
-							<p className="mt-2 mb-5 ml-[20%] text-sm">Instructions for <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
+							<p className="mt-2 mb-5 md:ml-[20%] ml-[23%] text-sm">Instructions for <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
 							<label className="text-gray-300 mr-auto">Columns:</label>
 							{
 								user?.columns.map((column: string) => (
@@ -85,7 +86,7 @@ export default function ActiveCampaignDashboard() {
 							<div className="flex grow items-baseline align-center">
 								<label htmlFor="pollFrequency" className="text-gray-300 mr-auto">Poll Frequency:</label>
 								<Select value={user?.poll_frequency} defaultValue={user?.poll_frequency} onValueChange={(value) => { setPollFrequency(value) }}>
-									<SelectTrigger className="min-w-[180px] max-w-[68%] mt-4 mb-4">
+									<SelectTrigger className="max-w-48 md:min-w-[180px] md:max-w-[68%] mt-4 mb-4">
 										<SelectValue placeholder="Select a poll frequency" />
 									</SelectTrigger>
 									<SelectContent>
@@ -102,14 +103,14 @@ export default function ActiveCampaignDashboard() {
 						:
 						<>
 							<div className="flex items-baseline justify-start align-center">
-								<label htmlFor="apiUrl" className="text-gray-300 mr-auto">API URL:</label>
-								<Input disabled className="text-gray-950 mt-4 w-[80%]" id="apiUrl" placeholder="API URL..." defaultValue={user?.api_url} />
+								<label htmlFor="apiUrl" className="text-gray-300 mr-auto text-nowrap">API URL:</label>
+								<Input disabled className="text-gray-950 mt-4 md:w-[80%] w-fit ml-2" id="apiUrl" placeholder="API URL..." defaultValue={user?.api_url} />
 							</div>
 							<div className="flex items-baseline justify-start mt-4 align-center">
-								<label htmlFor="apiKey" className="text-gray-300 mr-auto">API Key:</label>
-								<Input disabled className="text-gray-950 w-[80%]" id="apiKey" placeholder="API Key..." defaultValue={user?.api_key} />
+								<label htmlFor="apiKey" className="text-gray-300 mr-auto text-nowrap">API Key:</label>
+								<Input disabled className="text-gray-950 md:w-[80%] w-fit ml-2" id="apiKey" placeholder="API Key..." defaultValue={user?.api_key} />
 							</div>
-							<p className="mt-2 mb-5 ml-[20%] text-sm">Instructions for <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
+							<p className="mt-2 mb-5 md:ml-[20%] ml-[23%] text-sm">Instructions for <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
 							<label className="text-gray-300 mr-auto">Columns:</label>
 							{
 								user?.columns.map((column: string) => (
@@ -122,7 +123,7 @@ export default function ActiveCampaignDashboard() {
 							<div className="flex grow items-baseline align-center">
 								<label htmlFor="pollFrequency" className="text-gray-300 mr-auto">Poll Frequency:</label>
 								<Select disabled value={user?.poll_frequency} defaultValue={user?.poll_frequency} onValueChange={(value) => { setPollFrequency(value) }}>
-									<SelectTrigger className="min-w-[180px] max-w-[68%] mt-4 mb-4">
+									<SelectTrigger className="max-w-48 md:min-w-[180px] md:max-w-[68%] mt-4 mb-4">
 										<SelectValue placeholder="Select a poll frequency" />
 									</SelectTrigger>
 									<SelectContent>

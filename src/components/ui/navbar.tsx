@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import {
 	Drawer,
 	DrawerClose,
@@ -10,6 +12,8 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from "@/components/ui/drawer"
+
+import hamburgerIcon from "@/public/icons8-hamburger-menu-50.png";
 
 import { useEffect, useState } from "react";
 import AuthButtons from "./authButtons";
@@ -33,7 +37,7 @@ export default function Navbar() {
 
 	return (
 
-		<nav className={`fixed top-0 left-0 w-full bg-black/0 transition-[box-shadow] duration-700 ease-out ${isScrolled ? 'shadow-lg shadow-gray-900/70 bg-black/100' : 'ease-in duration-300'}`}>
+		<nav className={`fixed top-0 left-0 w-full bg-black/0 transition-[box-shadow] duration-700 ease-out ${isScrolled ? 'shadow-lg shadow-gray-900/70 bg-black/100 opacity-100 z-50' : 'ease-in duration-300'}`}>
 			<div className="max-w-[96rem] mx-auto px-8 py-2">
 				<div className="flex items-center justify-between h-16">
 					{/*<!-- Logo (Left) -->*/}
@@ -43,7 +47,9 @@ export default function Navbar() {
 
 					<div className="flex flex-1 justify-end items-center md:hidden">
 						<Drawer>
-							<DrawerTrigger><i className="fa-solid fa-hamburger text-gray-300 align-middle text-2xl p-1 active:text-gray-300/70"></i></DrawerTrigger>
+							<DrawerTrigger>
+								<Image alt='menu' src={hamburgerIcon} width={36} height={36}></Image>
+							</DrawerTrigger>
 							<DrawerContent>
 								<DrawerHeader>
 									<DrawerTitle className="pl-5 text-3xl text-left">Automeet</DrawerTitle>
@@ -54,11 +60,14 @@ export default function Navbar() {
 									<a href="/pricing">Pricing</a>
 									<a href="/data">Your Data</a>
 									<DrawerClose className="pt-5">
-										<div className="pt-5 pb-5 text-base space-x-3 flex justify-center">
-											<AuthButtons />
-											{/*<a className="border text-center bg-gray-300 text-gray-950 w-24 px-2 py-1 rounded-md">Sign In</a>
-											<a className="border text-center w-24 px-2 py-1 rounded-md">Sign Up</a>*/}
-										</div>
+										{user ? (
+											<a className="border bg-gray-300 text-base text-gray-950 px-3 py-2 rounded-md" href="/dashboard">Dashboard</a>
+										) : (
+											<div className="pt-5 pb-5 text-base space-x-3 flex justify-center">
+												<a className="border text-center bg-gray-300 text-gray-950 w-24 px-2 py-1 rounded-md" href="/sign-in">Sign In</a>
+												<a className="border text-center w-24 px-2 py-1 rounded-md" href="/sign-in">Sign Up</a>
+											</div>
+										)}
 									</DrawerClose>
 								</DrawerFooter>
 							</DrawerContent>

@@ -1,7 +1,7 @@
 "use client";
-import Image from "next/image"
-import eyeImg from "@/public/eye.png";
-import eyeSlashImg from "@/public/eye-slash.png";
+// import Image from "next/image"
+// import eyeImg from "@/public/eye.png";
+// import eyeSlashImg from "@/public/eye-slash.png";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -125,7 +125,7 @@ export default function AuthButtons() {
 						</DialogFooter>
 					</form>
 				</DialogContent>
-			</Dialog >
+			</Dialog>
 			<Dialog>
 				<DialogTrigger asChild>
 					<Button className="border text-center w-24 px-2 py-1 rounded-md md:border-0 md:px-4 md:py-2 md:bg-blue-600 md:hover:bg-blue-700">Sign Up</Button>
@@ -170,7 +170,7 @@ export default function AuthButtons() {
 						</DialogFooter>
 					</form>
 				</DialogContent>
-			</Dialog >
+			</Dialog>
 		</>
 	)
 };
