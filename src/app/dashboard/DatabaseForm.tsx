@@ -5,7 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 export default function DatabaseForm({ provider }: { provider: string }) {
 	const user = useAuth().user;
 
-	if (!user) return;
+	if (!user) return <div className="flex items-center justify-center">Not logged in</div>;
 	let providerInstructionLink = "";
 	if (provider === 'SQLite') {
 		providerInstructionLink = 'https://www.sqlite.org/download.html';
@@ -19,7 +19,7 @@ export default function DatabaseForm({ provider }: { provider: string }) {
 		const db_type = provider;
 		const api_url = e.currentTarget.apiUrl.value;
 		const api_key = e.currentTarget.apiKey.value;
-		if (!user) return;
+		if (!user) return <div className="flex items-center justify-center">Not logged in</div>;
 		const email = user.email;
 		const response = await fetch(`${API_BASE_URL}/setup-subscription`, {
 			method: 'POST',
