@@ -54,13 +54,13 @@ const Pricing = () => {
 	}
 
 	return (
-		<div className="@container">
-			<div className="w-full h-20 min-[385px]:hidden"></div>
-			<div className="w-full min-[385px]:h-svh flex justify-center items-center [(min-width:350px)]:h-svh">
-				<div className="md:glass-card">
+		<div>
+			<div className="w-full h-20 min-[376px]:hidden"></div>
+			<div className="w-dvw min-[376px]:h-dvh flex justify-center items-center">
+				<div className="md:glass-card mx-8">
 					<div className="md:glass-card-contents">
-						<h2 className="md:text-center text-xl mb-3 text-pretty mx-8 md:mx-auto">Scaled to your use case, only pay for what you use</h2>
-						<div className="md:w-96 md:mx-auto mx-8 w-56 min-w-fit text-pretty">
+						<h2 className="md:text-center text-xl mb-3 text-pretty md:mx-auto">Scaled to your use case, only pay for what you use</h2>
+						<div className="md:w-96 md:mx-auto w-56 min-w-fit text-pretty">
 							<br></br>
 							<label>Number of columns holding descriptive data</label>
 							<Slider className="my-4" value={columns} onValueChange={setColumns} defaultValue={columns} max={26} step={1} />

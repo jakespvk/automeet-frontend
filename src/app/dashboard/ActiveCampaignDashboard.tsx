@@ -18,7 +18,7 @@ import { useState } from "react";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function ActiveCampaignDashboard() {
-	const { user } = useAuth();
+	let { user } = useAuth();
 	const [editMode, setEditMode] = useState(false);
 	const [pollFrequency, setPollFrequency] = useState(user?.poll_frequency) || "Monthly";
 	const provider = "ActiveCampaign";
@@ -52,7 +52,7 @@ export default function ActiveCampaignDashboard() {
 			body: JSON.stringify({ user }),
 		})
 			.then(response => response.json())
-			.then(data => console.log(data));
+			.then(data => user = data.user);
 	}
 
 	return (
