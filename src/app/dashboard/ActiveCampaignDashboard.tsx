@@ -57,7 +57,7 @@ export default function ActiveCampaignDashboard() {
 
     return (
         <div className="flex flex-col items-center justify-center pb-10 [@media(min-height:950px)]:pb-0 [@media(min-height:950px)]:h-rsvh overflow-y-auto overflow-x-clip">
-            <div className="[@media(min-height:950px)]:hidden w-screen h-18"></div>
+            <div className="[@media(min-height:950px)]:hidden w-screen h-28"></div>
             <div className="md:glass-card p-10">
                 <div className="md:w-[400px]">
                     <h1 className="text-2xl md:text-4xl text-center mb-7">Dashboard</h1>
