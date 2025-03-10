@@ -56,8 +56,8 @@ export default function ActiveCampaignDashboard() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center pb-10 [@media(min-height:950px)]:pb-0 [@media(min-height:950px)]:h-rsvh overflow-y-auto overflow-x-clip">
-            <div className="[@media(min-height:950px)]:hidden w-screen h-28"></div>
+        <div className="flex flex-col items-center justify-center pb-10 [@media(min-height:950px)]:pb-0 [@media(min-height:950px)]:h-rsvh">
+            <div className="[@media(min-height:950px)]:hidden w-screen h-24"></div>
             <div className="md:glass-card p-10">
                 <div className="md:w-[400px]">
                     <h1 className="text-2xl md:text-4xl text-center mb-7">Dashboard</h1>
@@ -73,7 +73,7 @@ export default function ActiveCampaignDashboard() {
                                 <label htmlFor="apiKey" className="text-gray-300 mr-auto text-nowrap">API Key:</label>
                                 <Input className="text-gray-950 md:w-[80%] w-fit ml-2" id="apiKey" placeholder="API Key..." defaultValue={user?.api_key} />
                             </div>
-                            <p className="mt-2 mb-5 md:ml-[20%] ml-[23%] text-sm">Instructions for <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
+                            <p className="mt-2 mb-5 md:ml-[20%] ml-[23%] text-sm">Instructions for <a className="text-blue-600 hover:underline text-sm" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
                             <label className="text-gray-300 mr-auto">Columns:</label>
                             {
                                 user?.columns.map((column: string) => (
