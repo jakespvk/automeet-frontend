@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    * {
+        font-size: 1.2rem;
+    }
+}
 @layer components {
     .glass-card {
 		max-width: fit-content;
