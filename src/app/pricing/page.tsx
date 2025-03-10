@@ -55,8 +55,8 @@ const Pricing = () => {
 
     return (
         <div>
-            <div className="max-w-fit h-20 min-[376px]:hidden"></div>
-            <div className="w-dvw min-[376px]:h-dvh flex justify-center items-center">
+            <div className="max-w-fit h-20 [@media(min-height:950px)]:hidden"></div>
+            <div className="[@media(min-height:950px)]:h-dvh flex justify-center items-center">
                 <div className="md:glass-card mx-8">
                     <div className="md:glass-card-contents">
                         <h2 className="md:text-center text-xl mb-3 text-pretty md:mx-auto">Scaled to your use case, only pay for what you use</h2>
