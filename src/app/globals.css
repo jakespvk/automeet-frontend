@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@theme {
+    --breakpoint-2xl: 1700px;
+}
 @layer base {
     * {
         font-size: 1.2rem;
