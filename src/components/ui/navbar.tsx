@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import DashboardLogoutButton from "../../app/dashboard/dashboardLogoutButton";
 
 import {
     Drawer,
@@ -13,6 +14,8 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer"
 
+import { Button } from "@/components/ui/button"
+
 import hamburgerIcon from "@/public/icons8-hamburger-menu-50.png";
 
 import { useEffect, useState } from "react";
@@ -21,7 +24,7 @@ import AuthButtons from "./authButtons";
 import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
-    const { user } = useAuth();
+    const { user, loading, logout } = useAuth();
     const [isScrolled, setIsScrolled] = useState(false);
 
     useEffect(() => {
@@ -60,14 +63,18 @@ export default function Navbar() {
                                     <a href="/pricing">Pricing</a>
                                     <a href="/data">Your Data</a>
                                     <DrawerClose className="pt-5">
-                                        {user ? (
-                                            <a className="border bg-gray-300 text-base text-gray-950 px-3 py-2 rounded-md" href="/dashboard">Dashboard</a>
-                                        ) : (
-                                            <div className="pt-5 pb-5 text-base space-x-3 flex justify-center">
-                                                <a className="border text-center bg-gray-300 text-gray-950 w-24 px-2 py-1 rounded-md" href="/sign-in">Sign In</a>
-                                                <a className="border text-center w-24 px-2 py-1 rounded-md" href="/sign-in">Sign Up</a>
-                                            </div>
-                                        )}
+                                        {loading ? null :
+                                            user ? (
+                                                <div className="pt-5 pb-5 text-base space-x-3 flex justify-center">
+                                                    <a className="border bg-gray-300 text-base text-gray-950 px-3 py-2 rounded-md" href="/dashboard">Dashboard</a>
+                                                    <DashboardLogoutButton />
+                                                </div>
+                                            ) : (
+                                                <div className="pt-5 pb-5 text-base space-x-3 flex justify-center">
+                                                    <a className="border text-center bg-gray-300 text-gray-950 w-24 px-2 py-1 rounded-md" href="/sign-in">Sign In</a>
+                                                    <a className="border text-center w-24 px-2 py-1 rounded-md" href="/sign-in">Sign Up</a>
+                                                </div>
+                                            )}
                                     </DrawerClose>
                                 </DrawerFooter>
                             </DrawerContent>
@@ -83,11 +90,15 @@ export default function Navbar() {
 
                     {/*<!-- Sign In / Sign Up (Right) -->*/}
                     <div className="hidden flex-1 min-[1000px]:flex justify-end items-center gap-4">
-                        {user ? (
-                            <a role="button" className="btn" href="/dashboard">Dashboard</a>
-                        ) : (
-                            <AuthButtons />
-                        )}
+                        {loading ? null :
+                            user ? (
+                                <div className="pt-5 pb-5 text-base space-x-3 flex justify-center">
+                                    <a role="button" className="btn" href="/dashboard">Dashboard</a>
+                                    <Button variant="outline" className="w-24 hover:bg-gray-200 hover:text-black" onClick={logout}>Logout</Button>
+                                </div>
+                            ) : (
+                                <AuthButtons />
+                            )}
                     </div>
 
 

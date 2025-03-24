@@ -5,77 +5,78 @@ import { createContext, useContext, ReactNode, useState, useEffect } from "react
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 type User = {
-	email: string;
-	subscription: boolean;
-	db_type: string;
-	columns: string[];
-	active_columns: string[];
-	column_limit: number;
-	row_limit: number;
-	login_token: string;
-	api_url: string;
-	api_key: string;
-	poll_frequency: string;
+    email: string;
+    subscription: boolean;
+    db_type: string;
+    columns: string[];
+    active_columns: string[];
+    column_limit: number;
+    row_limit: number;
+    login_token: string;
+    api_url: string;
+    api_key: string;
+    poll_frequency: string;
 }
 
 type AuthContextType = {
-	user: User | null;
-	loading: boolean;
-	checkAuth: () => Promise<void>;
-	logout: () => void;
-	// Add other auth-related methods here
+    user: User | null;
+    loading: boolean;
+    checkAuth: () => Promise<void>;
+    logout: () => void;
+    // Add other auth-related methods here
 };
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-	const [user, setUser] = useState<User | null>(null);
-	const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
 
-	// Use the continuous login check logic here
-	const checkAuth = async () => {
-		const token = localStorage.getItem("authToken");
-		try {
-			const response = await fetch(`${API_BASE_URL}/verify?token=${token}`, {});
+    // Use the continuous login check logic here
+    const checkAuth = async () => {
+        setLoading(true);
+        const token = localStorage.getItem("authToken");
+        try {
+            const response = await fetch(`${API_BASE_URL}/verify?token=${token}`, {});
 
-			if (response.ok) {
-				if (token) {
-					localStorage.setItem("authToken", token);
-				}
-				const userData = await response.json();
-				setUser(userData.user);
-			} else {
-				setUser(null);
-			}
-		} catch (error) {
-			console.error("Error checking auth:", error);
-			setUser(null);
-		} finally {
-			setLoading(false);
-		}
-	};
-	useEffect(() => {
-		// Initial check
-		checkAuth();
+            if (response.ok) {
+                if (token) {
+                    localStorage.setItem("authToken", token);
+                }
+                const userData = await response.json();
+                setUser(userData.user);
+            } else {
+                setUser(null);
+            }
+        } catch (error) {
+            console.error("Error checking auth:", error);
+            setUser(null);
+        } finally {
+            setLoading(false);
+        }
+    };
+    useEffect(() => {
+        // Initial check
+        checkAuth();
 
-		// Set up interval to periodically check auth
-		const interval = setInterval(checkAuth, 120000);
+        // Set up interval to periodically check auth
+        const interval = setInterval(checkAuth, 120000);
 
-		return () => {
-			clearInterval(interval);
-		};
-	}, []);
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
 
-	const logout = () => {
-		localStorage.removeItem('authToken');
-		setUser(null);
-	};
+    const logout = () => {
+        localStorage.removeItem('authToken');
+        setUser(null);
+    };
 
-	return (
-		<AuthContext.Provider value={{ user, loading, checkAuth, logout }}>
-			{children}
-		</AuthContext.Provider>
-	);
+    return (
+        <AuthContext.Provider value={{ user, loading, checkAuth, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
 export const useAuth = () => useContext(AuthContext);
