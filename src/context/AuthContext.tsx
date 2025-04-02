@@ -16,6 +16,7 @@ type User = {
     api_url: string;
     api_key: string;
     poll_frequency: string;
+    attio_token: string;
 }
 
 type AuthContextType = {

@@ -17,12 +17,12 @@ import { useRouter } from "next/navigation";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export default function ActiveCampaignDashboard() {
+export default function AttioDashboard() {
     let { user, checkAuth } = useAuth();
-    const [editMode, setEditMode] = useState(false);
     const [pollFrequency, setPollFrequency] = useState(user?.poll_frequency) || "Monthly";
-    const provider = "ActiveCampaign";
-    const providerInstructionLink = 'https://help.activecampaign.com/hc/en-us/articles/207317590-Getting-started-with-the-API#h_01HJ6REM2YQW19KYPB189726ST';
+    const [editMode, setEditMode] = useState(false);
+    const provider = "Attio";
+    const providerInstructionLink = 'blah';
     const router = useRouter();
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -71,13 +71,9 @@ export default function ActiveCampaignDashboard() {
                     {editMode
                         ?
                         <form onSubmit={(e) => handleSubmit(e)}>
-                            <div className="flex items-baseline justify-start align-center">
-                                <label htmlFor="apiUrl" className="text-gray-300 mr-auto text-nowrap">API URL:</label>
-                                <Input className="text-gray-950 mt-4 md:w-[80%] w-fit ml-2" id="apiUrl" placeholder="API URL..." defaultValue={user?.api_url} />
-                            </div>
                             <div className="flex items-baseline justify-start mt-4 align-center">
-                                <label htmlFor="apiKey" className="text-gray-300 mr-auto text-nowrap">API Key:</label>
-                                <Input className="text-gray-950 md:w-[80%] w-fit ml-2" id="apiKey" placeholder="API Key..." defaultValue={user?.api_key} />
+                                <label htmlFor="apiKey" className="text-gray-300 mr-auto text-nowrap">API Token:</label>
+                                <Input className="text-gray-950 md:w-[80%] w-fit ml-2" id="attioToken" placeholder="API Token..." defaultValue={user?.attio_token} />
                             </div>
                             <p className="mt-2 mb-5 md:ml-[25%] ml-[28%] text-sm">Instructions for <a className="text-blue-600 hover:underline text-sm" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
                             <label className="text-gray-300 mr-auto">Columns:</label>
@@ -108,13 +104,9 @@ export default function ActiveCampaignDashboard() {
                         </form>
                         :
                         <>
-                            <div className="flex items-baseline justify-start align-center">
-                                <label htmlFor="apiUrl" className="text-gray-300 mr-auto text-nowrap">API URL:</label>
-                                <Input disabled className="text-gray-950 mt-4 md:w-[80%] w-fit ml-2" id="apiUrl" placeholder="API URL..." defaultValue={user?.api_url} />
-                            </div>
                             <div className="flex items-baseline justify-start mt-4 align-center">
-                                <label htmlFor="apiKey" className="text-gray-300 mr-auto text-nowrap">API Key:</label>
-                                <Input disabled className="text-gray-950 md:w-[80%] w-fit ml-2" id="apiKey" placeholder="API Key..." defaultValue={user?.api_key} />
+                                <label htmlFor="apiKey" className="text-gray-300 mr-auto text-nowrap">API Token:</label>
+                                <Input disabled className="text-gray-950 md:w-[80%] w-fit ml-2" id="attio_token" placeholder="API Token..." defaultValue={user?.attio_token} />
                             </div>
                             <p className="mt-2 mb-5 md:ml-[25%] ml-[28%] text-sm">Instructions for <a className="text-blue-600 hover:underline text-sm" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
                             <label className="text-gray-300 mr-auto">Columns:</label>
@@ -128,7 +120,7 @@ export default function ActiveCampaignDashboard() {
                             }
                             <div className="flex grow items-baseline align-center">
                                 <label htmlFor="pollFrequency" className="text-gray-300 mr-auto">Poll Frequency:</label>
-                                <Select disabled value={user?.poll_frequency} defaultValue={user?.poll_frequency} onValueChange={(value) => { setPollFrequency(value) }}>
+                                <Select value={pollFrequency} defaultValue={user?.poll_frequency} onValueChange={(value) => { setPollFrequency(value) }}>
                                     <SelectTrigger className="max-w-56 md:min-w-[180px] mt-4 mb-4">
                                         <SelectValue placeholder="Select a poll frequency" />
                                     </SelectTrigger>
@@ -150,4 +142,3 @@ export default function ActiveCampaignDashboard() {
         </div >
     )
 }
-
