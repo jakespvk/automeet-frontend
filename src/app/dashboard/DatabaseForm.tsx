@@ -18,7 +18,7 @@ export default function DatabaseForm({ provider }: { provider: string }) {
         providerInstructionLink = 'https://help.activecampaign.com/hc/en-us/articles/207317590-Getting-started-with-the-API#h_01HJ6REM2YQW19KYPB189726ST';
         return <DatabaseForm_AC provider={provider} providerLink={providerInstructionLink} />
     } else if (provider === 'Attio') {
-        providerInstructionLink = 'dfjsldkfj'
+        providerInstructionLink = 'https://attio.com/help/apps/other-apps/generating-an-api-key';
         return <DatabaseForm_Attio provider={provider} providerLink={providerInstructionLink} />
     }
 }

@@ -66,8 +66,10 @@ export default function AttioDashboard() {
             <div className="md:glass-card p-10">
                 <div className="md:w-[400px]">
                     <h1 className="text-2xl md:text-4xl text-center mb-7">Dashboard</h1>
-                    <h2 className="mb-1 md:text-lg"><strong>Provider:</strong> {provider}</h2>
-                    <button onClick={() => removeProvider()}>x</button>
+                    <div className="flex items-baseline">
+                        <h2 className="mb-1 md:text-lg"><strong>Provider:</strong> {provider}</h2>
+                        <button className="ml-2.5 px-2 py-0.4 rounded-md -translate-y-0.5 bg-gray-600" onClick={() => removeProvider()}>x</button>
+                    </div>
                     {editMode
                         ?
                         <form onSubmit={(e) => handleSubmit(e)}>
@@ -120,7 +122,7 @@ export default function AttioDashboard() {
                             }
                             <div className="flex grow items-baseline align-center">
                                 <label htmlFor="pollFrequency" className="text-gray-300 mr-auto">Poll Frequency:</label>
-                                <Select value={pollFrequency} defaultValue={user?.poll_frequency} onValueChange={(value) => { setPollFrequency(value) }}>
+                                <Select disabled value={pollFrequency} defaultValue={user?.poll_frequency} onValueChange={(value) => { setPollFrequency(value) }}>
                                     <SelectTrigger className="max-w-56 md:min-w-[180px] mt-4 mb-4">
                                         <SelectValue placeholder="Select a poll frequency" />
                                     </SelectTrigger>

@@ -33,6 +33,7 @@ export default function DatabaseForm_Attio({ provider, providerLink }: { provide
             <form id="apiUrlForm" onSubmit={(e) => handleSubmit(e)}>
                 <Input className="text-gray-950 mt-3" id="attio_token" placeholder="API Token..." />
                 <p className="my-2 ml-1 text-sm">Instructions for <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" href={providerLink}>{provider}</a></p>
+                <p className="my-4">Make sure to give &apos;READ&apos; access only for added security, and grant access to the &apos;Records&apos; Scope</p>
                 <div className="flex items-center justify-center">
                     <Button className="btn mt-3 w-36" type="submit">Save</Button>
                 </div>
