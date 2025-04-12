@@ -25,6 +25,18 @@ export default function ActiveCampaignDashboard() {
     const providerInstructionLink = 'https://help.activecampaign.com/hc/en-us/articles/207317590-Getting-started-with-the-API#h_01HJ6REM2YQW19KYPB189726ST';
     const router = useRouter();
 
+    let activeColumns = user?.active_columns;
+
+    function handleCheckedChange(column: string) {
+        if (!activeColumns) return;
+        const idx = activeColumns.indexOf(column);
+        if (idx === -1) {
+            activeColumns.push(column);
+        } else {
+            activeColumns.splice(idx, 1);
+        }
+    }
+
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         if (!user) return;
         e.preventDefault();
@@ -35,7 +47,6 @@ export default function ActiveCampaignDashboard() {
         if (pollFrequency !== undefined) {
             user.poll_frequency = pollFrequency;
         }
-        console.log(JSON.stringify({ user }));
         await fetch(`${API_BASE_URL}/set-user-db-details`, {
             method: 'POST',
             headers: {
@@ -45,6 +56,7 @@ export default function ActiveCampaignDashboard() {
         })
             .then(response => response.json())
             .then(data => user = data.user);
+        checkAuth();
     }
 
     async function removeProvider() {
@@ -86,7 +98,7 @@ export default function ActiveCampaignDashboard() {
                             {
                                 user?.columns.map((column: string) => (
                                     <div className="flex items-center justify-start my-2 ml-2">
-                                        <Checkbox className="disabled:bg-neutral-500 ml-4" defaultChecked={(user?.active_columns.includes(column)) ? true : false} id={column} />
+                                        <Checkbox className="disabled:bg-neutral-500 ml-4" onCheckedChange={() => handleCheckedChange(column)} defaultChecked={(user?.active_columns.includes(column)) ? true : false} id={column} />
                                         <label className="ml-2" htmlFor={column}>{column}</label>
                                     </div>
                                 ))
