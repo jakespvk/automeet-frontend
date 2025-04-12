@@ -23,8 +23,6 @@ export default function DatabaseForm_AC({ provider, providerLink }: { provider: 
             body: JSON.stringify({ email, db_type, api_url, api_key }),
         })
             .then(response => response.json())
-            .then(data => console.log(data));
-        console.log(response);
     }
 
     return (

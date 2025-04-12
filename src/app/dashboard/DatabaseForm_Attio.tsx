@@ -14,7 +14,6 @@ export default function DatabaseForm_Attio({ provider, providerLink }: { provide
         const attio_token = e.currentTarget.attio_token.value;
         if (!user) return <div className="flex items-center justify-center">Not logged in</div>;
         const email = user.email;
-        console.log(`${API_BASE_URL}/setup-subscription/${db_type}`);
         const response = await fetch(`${API_BASE_URL}/setup-subscription/${db_type}`, {
             method: 'POST',
             headers: {
@@ -23,8 +22,6 @@ export default function DatabaseForm_Attio({ provider, providerLink }: { provide
             body: JSON.stringify({ email, db_type, attio_token }),
         })
             .then(response => response.json())
-            .then(data => console.log(data));
-        console.log(response);
     }
 
     return (

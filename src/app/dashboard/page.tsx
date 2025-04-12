@@ -1,16 +1,14 @@
 "use client";
+import { useAuth } from "@/context/AuthContext";
 import NewUserDashboard from "./NewUserDashboard";
 import SQLiteDashboard from "./SQLiteDashboard";
 import ActiveCampaignDashboard from "./ActiveCampaignDashboard";
-import { useAuth } from "@/context/AuthContext";
 import AttioDashboard from "./AttioDashboard";
 
 export default function Dashboard() {
     const { user } = useAuth();
 
-    console.log(user);
     const db_provider = user?.db_type;
-
 
     if (!user) return <div className="flex items-center justify-center h-screen">Not logged in</div>;
     if (db_provider === undefined || db_provider === '') return <NewUserDashboard />;

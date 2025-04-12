@@ -65,7 +65,6 @@ export default function ActiveCampaignDashboard() {
                 method: 'DELETE',
             })
                 .then(response => response.json())
-                .then(data => console.log(data));
 
             checkAuth();
             router.replace('/dashboard');

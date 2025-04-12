@@ -35,7 +35,6 @@ export default function AttioDashboard() {
         if (pollFrequency !== undefined) {
             user.poll_frequency = pollFrequency;
         }
-        console.log(JSON.stringify({ user }));
         await fetch(`${API_BASE_URL}/set-user-db-details`, {
             method: 'POST',
             headers: {
@@ -53,7 +52,6 @@ export default function AttioDashboard() {
                 method: 'DELETE',
             })
                 .then(response => response.json())
-                .then(data => console.log(data));
 
             checkAuth();
             router.replace('/dashboard');
