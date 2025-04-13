@@ -21,7 +21,7 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 export default function LoggedInDashboard({ provider, providerInstructionLink }: { provider: string, providerInstructionLink: string }) {
   let { user, checkAuth } = useAuth();
   const [editMode, setEditMode] = useState(false);
-  const [pollFrequency, setPollFrequency] = useState(user?.poll_frequency) || "Monthly";
+  const [pollFrequency, setPollFrequency] = useState(user?.poll_frequency);
   const router = useRouter();
 
   let activeColumns = user?.active_columns;
@@ -57,7 +57,7 @@ export default function LoggedInDashboard({ provider, providerInstructionLink }:
     })
       .then(response => response.json())
       .then(data => user = data.user);
-    checkAuth();
+    // checkAuth();
   }
 
   async function removeProvider() {
@@ -79,9 +79,9 @@ export default function LoggedInDashboard({ provider, providerInstructionLink }:
   return (
     <div className="flex flex-col items-center justify-center pb-10 [@media(min-height:1350px)]:pb-0 [@media(min-height:1350px)]:h-svh">
       <div className="[@media(min-height:1450px)]:hidden w-screen h-24"></div>
-      <div className="md:glass-card p-10">
+      <div className="md:glass-card md:px-10 md:py-6">
         <div className="md:w-[400px]">
-          <h1 className="text-2xl md:text-4xl text-center mb-2">Dashboard</h1>
+          <h1 className="text-2xl md:text-4xl text-center mb-4">Dashboard</h1>
           <div className="flex items-center mb-2">
             <h2 className="mb-1 md:text-lg"><strong>Provider:</strong> {provider}</h2>
             <button className="ml-2.5 p-1 -translate-y-0.5 rounded-md bg-red-700" onClick={() => removeProvider()}>
@@ -100,7 +100,7 @@ export default function LoggedInDashboard({ provider, providerInstructionLink }:
                   </div>
                 ))
               }
-              <div className="flex grow items-baseline align-center">
+              <div className="flex mt-4 md:mt-0 flex-col md:flex-row grow items-baseline align-center">
                 <label htmlFor="pollFrequency" className="text-gray-300 mr-auto">Poll Frequency:</label>
                 <Select value={pollFrequency} defaultValue={user?.poll_frequency} onValueChange={(value) => { setPollFrequency(value) }}>
                   <SelectTrigger className="max-w-56 md:min-w-[180px] mt-4 mb-4">
@@ -128,9 +128,9 @@ export default function LoggedInDashboard({ provider, providerInstructionLink }:
                   </div>
                 ))
               }
-              <div className="flex grow items-baseline align-center">
+              <div className="flex mt-4 md:mt-0 flex-col md:flex-row grow items-baseline align-center">
                 <label htmlFor="pollFrequency" className="text-gray-300 mr-auto">Poll Frequency:</label>
-                <Select disabled value={user?.poll_frequency} defaultValue={user?.poll_frequency} onValueChange={(value) => { setPollFrequency(value) }}>
+                <Select disabled value={pollFrequency} defaultValue={user?.poll_frequency} onValueChange={(value) => { setPollFrequency(value); }}>
                   <SelectTrigger className="max-w-56 md:min-w-[180px] mt-4 mb-4">
                     <SelectValue placeholder="Select a poll frequency" />
                   </SelectTrigger>
