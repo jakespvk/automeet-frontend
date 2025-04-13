@@ -17,13 +17,19 @@ import { useRouter } from "next/navigation";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export default function ActiveCampaignDashboard() {
+type Props = {
+  provider: string,
+  providerInstructionLink: string,
+  handleSubmit_Provider(e: React.FormEvent<HTMLFormElement>): Promise<void>
+}
+
+export default function LoggedInDashboard(props: Props) {
   let { user, checkAuth } = useAuth();
   const [editMode, setEditMode] = useState(false);
   const [pollFrequency, setPollFrequency] = useState(user?.poll_frequency) || "Monthly";
-  const provider = "ActiveCampaign";
-  const providerInstructionLink = 'https://help.activecampaign.com/hc/en-us/articles/207317590-Getting-started-with-the-API#h_01HJ6REM2YQW19KYPB189726ST';
   const router = useRouter();
+  const provider = props.provider;
+  const providerInstructionLink = props.providerInstructionLink;
 
   let activeColumns = user?.active_columns;
 
@@ -37,13 +43,15 @@ export default function ActiveCampaignDashboard() {
     }
   }
 
+  // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  //   await props.handleSubmit_Provider(e);
+  // }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     if (!user) return;
     e.preventDefault();
 
     setEditMode(false);
-    user.api_url = e.currentTarget.apiUrl.value;
-    user.api_key = e.currentTarget.apiKey.value;
     if (pollFrequency !== undefined) {
       user.poll_frequency = pollFrequency;
     }
@@ -88,15 +96,6 @@ export default function ActiveCampaignDashboard() {
           {editMode
             ?
             <form onSubmit={(e) => handleSubmit(e)}>
-              <div className="flex items-baseline justify-start align-center">
-                <label htmlFor="apiUrl" className="text-gray-300 mr-auto text-nowrap">API URL:</label>
-                <Input className="text-gray-950 mt-4 md:w-[75%] w-fit ml-2" id="apiUrl" placeholder="API URL..." defaultValue={user?.api_url} />
-              </div>
-              <div className="flex items-baseline justify-start mt-4 align-center">
-                <label htmlFor="apiKey" className="text-gray-300 mr-auto text-nowrap">API Key:</label>
-                <Input className="text-gray-950 md:w-[75%] w-fit ml-2" id="apiKey" placeholder="API Key..." defaultValue={user?.api_key} />
-              </div>
-              <p className="mt-2 mb-5 md:ml-[26%] ml-[28%] text-sm">Instructions for <a className="text-blue-600 hover:underline text-sm" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
               <label className="text-gray-300 mr-auto">Columns:</label>
               {
                 user?.columns.map((column: string) => (
@@ -167,4 +166,3 @@ export default function ActiveCampaignDashboard() {
     </div >
   )
 }
-
