@@ -1,5 +1,6 @@
 "use client";
 
+import { X } from "lucide-react"
 import DashboardLogoutButton from "./dashboardLogoutButton";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,19 +18,11 @@ import { useRouter } from "next/navigation";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-type Props = {
-  provider: string,
-  providerInstructionLink: string,
-  handleSubmit_Provider(e: React.FormEvent<HTMLFormElement>): Promise<void>
-}
-
-export default function LoggedInDashboard(props: Props) {
+export default function LoggedInDashboard({ provider, providerInstructionLink }: { provider: string, providerInstructionLink: string }) {
   let { user, checkAuth } = useAuth();
   const [editMode, setEditMode] = useState(false);
   const [pollFrequency, setPollFrequency] = useState(user?.poll_frequency) || "Monthly";
   const router = useRouter();
-  const provider = props.provider;
-  const providerInstructionLink = props.providerInstructionLink;
 
   let activeColumns = user?.active_columns;
 
@@ -88,10 +81,12 @@ export default function LoggedInDashboard(props: Props) {
       <div className="[@media(min-height:1450px)]:hidden w-screen h-24"></div>
       <div className="md:glass-card p-10">
         <div className="md:w-[400px]">
-          <h1 className="text-2xl md:text-4xl text-center mb-7">Dashboard</h1>
-          <div className="flex items-baseline">
+          <h1 className="text-2xl md:text-4xl text-center mb-2">Dashboard</h1>
+          <div className="flex items-center mb-2">
             <h2 className="mb-1 md:text-lg"><strong>Provider:</strong> {provider}</h2>
-            <button className="ml-2.5 px-2 py-0.4 rounded-md -translate-y-0.5 bg-red-700" onClick={() => removeProvider()}>x</button>
+            <button className="ml-2.5 p-1 -translate-y-0.5 rounded-md bg-red-700" onClick={() => removeProvider()}>
+              <X className="h-4 w-4" />
+            </button>
           </div>
           {editMode
             ?
@@ -124,15 +119,6 @@ export default function LoggedInDashboard(props: Props) {
             </form>
             :
             <>
-              <div className="flex items-baseline justify-start align-center">
-                <label htmlFor="apiUrl" className="text-gray-300 mr-auto text-nowrap">API URL:</label>
-                <Input disabled className="text-gray-950 mt-4 md:w-[75%] w-fit ml-2" id="apiUrl" placeholder="API URL..." defaultValue={user?.api_url} />
-              </div>
-              <div className="flex items-baseline justify-start mt-4 align-center">
-                <label htmlFor="apiKey" className="text-gray-300 mr-auto text-nowrap">API Key:</label>
-                <Input disabled className="text-gray-950 md:w-[75%] w-fit ml-2" id="apiKey" placeholder="API Key..." defaultValue={user?.api_key} />
-              </div>
-              <p className="mt-2 mb-5 md:ml-[26%] ml-[28%] text-sm">Instructions for <a className="text-blue-600 hover:underline text-sm" target="_blank" rel="noopener noreferrer" href={providerInstructionLink}>{provider}</a></p>
               <label className="text-gray-300 mr-auto">Columns:</label>
               {
                 user?.columns.map((column: string) => (
