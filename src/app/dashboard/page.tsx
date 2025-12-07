@@ -4,6 +4,7 @@ import NewUserDashboard from "./NewUserDashboard";
 import SQLiteDashboard from "./SQLiteDashboard";
 import LoggedInDashboard from "./LoggedInDashboard";
 import { SkeletonCard } from "@/components/ui/SkeletonCard"
+import AuthButtons from "@/components/ui/authButtons";
 
 export default function Dashboard() {
   const { user, loading } = useAuth();
@@ -22,7 +23,7 @@ export default function Dashboard() {
       <SkeletonCard />
     </div>
   );
-  if (!user) return <div className="flex items-center justify-center h-screen">Not logged in</div>;
+  if (!user) return <div className="flex items-center justify-center h-screen"><p>nice try, bucko.</p><div className="flex mx-3"><AuthButtons /></div></div>;
 
   if (db_provider === undefined || db_provider === '') return <NewUserDashboard />;
   else if (db_provider === 'SQLite') return <SQLiteDashboard />;
