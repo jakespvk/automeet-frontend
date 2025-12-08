@@ -56,7 +56,8 @@ export default function ActiveCampaignDashboard() {
     })
       .then(response => response.json())
       .then(data => user = data.user);
-    checkAuth();
+
+    await checkAuth();
   }
 
   async function removeProvider() {
@@ -68,7 +69,7 @@ export default function ActiveCampaignDashboard() {
         })
           .then(response => response.json())
 
-        checkAuth();
+        await checkAuth();
         router.replace('/dashboard');
       }
 

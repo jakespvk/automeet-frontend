@@ -18,7 +18,7 @@ function MagicAuth() {
     localStorage.setItem('authToken', token);
     checkAuth();
     router.replace('/dashboard');
-  }, []);
+  }, [token, checkAuth, router]);
 
   return (
     <p>Verifying...</p>

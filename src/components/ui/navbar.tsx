@@ -29,7 +29,8 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
+      const scrolled = window.scrollY > 0;
+      setIsScrolled(prev => (prev === scrolled ? prev : scrolled));
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -89,7 +90,7 @@ export default function Navbar() {
           </div>
 
           {/*<!-- Sign In / Sign Up (Right) -->*/}
-          <div className="hidden flex-1 min-[1000px]:flex justify-end items-center gap-4">
+          <div className="hidden flex-1 min-[1000px]:flex justify-end items-center">
             {!loading &&
               user ? (
               <div className="pt-5 pb-5 text-base space-x-3 flex justify-center">

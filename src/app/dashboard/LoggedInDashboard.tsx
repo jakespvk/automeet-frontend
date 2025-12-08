@@ -19,20 +19,17 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function LoggedInDashboard({ provider, providerInstructionLink }: { provider: string, providerInstructionLink: string }) {
   let { user, checkAuth } = useAuth();
+  const [activeColumns, setActiveColumns] = useState<string[]>(() => user?.active_columns ?? []);
   const [editMode, setEditMode] = useState(false);
   const [pollFrequency, setPollFrequency] = useState(user?.poll_frequency);
   const router = useRouter();
 
-  let activeColumns = user?.active_columns;
-
   function handleCheckedChange(column: string) {
-    if (!activeColumns) return;
-    const idx = activeColumns.indexOf(column);
-    if (idx === -1) {
-      activeColumns.push(column);
-    } else {
-      activeColumns.splice(idx, 1);
-    }
+    setActiveColumns(prev =>
+      prev.includes(column)
+        ? prev.filter(c => c !== column)
+        : [...prev, column]
+    );
   }
 
   // async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -40,23 +37,27 @@ export default function LoggedInDashboard({ provider, providerInstructionLink }:
   // }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    if (!user) return;
     e.preventDefault();
 
+    if (!user) return;
+
     setEditMode(false);
-    if (pollFrequency !== undefined) {
-      user.poll_frequency = pollFrequency;
+
+    const payload = {
+      ...user,
+      poll_frequency: pollFrequency ?? user.poll_frequency,
+      active_columns: activeColumns,
     }
+
     await fetch(`${API_BASE_URL}/set-user-db-details`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ user }),
-    })
-      .then(response => response.json())
-      .then(data => user = data.user);
-    // checkAuth();
+      body: JSON.stringify(payload)
+    });
+
+    await checkAuth();
   }
 
   async function removeProvider() {
@@ -68,7 +69,7 @@ export default function LoggedInDashboard({ provider, providerInstructionLink }:
         })
           .then(response => response.json())
 
-        checkAuth();
+        await checkAuth();
         router.replace('/dashboard');
       }
 
@@ -94,7 +95,7 @@ export default function LoggedInDashboard({ provider, providerInstructionLink }:
               {
                 user?.columns.map((column: string) => (
                   <div className="flex items-center justify-start my-2 ml-2">
-                    <Checkbox className="disabled:bg-neutral-500 ml-4" onCheckedChange={() => handleCheckedChange(column)} defaultChecked={(user?.active_columns.includes(column)) ? true : false} id={column} />
+                    <Checkbox className="disabled:bg-neutral-500 ml-4" onCheckedChange={() => handleCheckedChange(column)} defaultChecked={(activeColumns?.includes(column)) ? true : false} id={column} />
                     <label className="ml-2" htmlFor={column}>{column}</label>
                   </div>
                 ))

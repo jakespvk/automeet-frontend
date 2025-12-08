@@ -60,11 +60,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     checkAuth();
 
     // Set up interval to periodically check auth
-    const interval = setInterval(checkAuth, 120000);
+    // const interval = setInterval(checkAuth, 120000);
 
-    return () => {
-      clearInterval(interval);
-    };
+    // return () => {
+    //   clearInterval(interval);
+    // };
   }, []);
 
   const logout = () => {
