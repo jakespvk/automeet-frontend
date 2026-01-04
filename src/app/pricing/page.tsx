@@ -5,6 +5,9 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import Link from "next/link";
+import { Subscription } from "@/types";
+
 const Pricing = () => {
   const defaultColumnsNumber = 5;
   const maxColumns = 26;
@@ -16,6 +19,8 @@ const Pricing = () => {
   const [rows, setRows] = useState([defaultRowsNumber]);
   const [pollFrequency, setPollFrequency] = useState(defaultPollFrequency);
   const PRICE = calculatePrice(columns[0], rows[0], pollFrequency);
+
+  const subscription: Subscription = { columnLimit: columns[0], rowLimit: rows[0], pollFrequency: pollFrequency ? "Daily" : "Weekly", price: parseFloat(PRICE === "Free" ? "0.0" : PRICE) };
 
   function calculatePrice(columns: number, rows: number, pollFrequency: boolean) {
     if ((pollFrequency === defaultPollFrequency) && columns <= 5 && rows <= 50) {
@@ -31,10 +36,6 @@ const Pricing = () => {
       }
       return "$" + (Math.round(price * factor) / factor) + "/month";
     }
-  }
-
-  function handlePurchase() {
-    alert("Purchased ... jk, wip");
   }
 
   function handleContactForEnterprise() {
@@ -70,8 +71,6 @@ const Pricing = () => {
                 <Switch checked={pollFrequency} onCheckedChange={setPollFrequency} id="airplane-mode" />
                 <Label htmlFor="airplane-mode">Daily</Label>
               </div>
-              {/* <Slider className="my-4" value={pollFrequency} onValueChange={setPollFrequency} defaultValue={pollFrequency} max={2} step={1} /> */}
-              {/* {(pollFrequency[0] === 3) ? <p>Enterprise</p> : <p>{translatePollFrequency(pollFrequency[0])}</p>} */}
               <div className="flex mt-7">
                 <strong>Your price:&nbsp;</strong>
                 {calculatePrice(columns[0], rows[0], pollFrequency)}
@@ -82,7 +81,7 @@ const Pricing = () => {
                   ?
                   <Button className="w-32 bg-blue-600 hover:bg-blue-700" onClick={handleContactForEnterprise}>Contact Me</Button>
                   :
-                  <Button className="w-32 bg-blue-600 hover:bg-blue-700" onClick={handlePurchase}>Let's do it</Button>
+                  <Button className="w-32 bg-blue-600 hover:bg-blue-700"><Link href={{ pathname: "pricing/checkout", query: { subscription: subscription } }}>Let's do it</Link></Button>
                 }
               </div>
             </div>
