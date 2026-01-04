@@ -11,8 +11,8 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 export default function SQLiteDashboard() {
     const { user } = useAuth();
     const [editMode, setEditMode] = useState(false);
-    let provider = "SQLite";
-    let providerInstructionLink = 'https://www.sqlite.org/download.html';
+    const provider = "SQLite";
+    const providerInstructionLink = 'https://www.sqlite.org/download.html';
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         if (!user) return;

@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, ReactNode, useState, useEffect } from "react";
+import { createContext, useContext, ReactNode, useState, useEffect, useMemo } from "react";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -31,7 +31,7 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // Use the continuous login check logic here
   const checkAuth = async () => {
@@ -55,17 +55,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    // Initial check
-    checkAuth();
 
-    // Set up interval to periodically check auth
-    // const interval = setInterval(checkAuth, 120000);
-
-    // return () => {
-    //   clearInterval(interval);
-    // };
-  }, []);
+  useMemo(() => checkAuth(), []);
 
   const logout = () => {
     localStorage.removeItem('authToken');

@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function LoggedInDashboard({ provider, providerInstructionLink }: { provider: string, providerInstructionLink: string }) {
-  let { user, checkAuth } = useAuth();
+  const { user, checkAuth } = useAuth();
   const [activeColumns, setActiveColumns] = useState<string[]>(() => user?.active_columns ?? []);
   const [editMode, setEditMode] = useState(false);
   const [pollFrequency, setPollFrequency] = useState(user?.poll_frequency);
@@ -93,8 +93,8 @@ export default function LoggedInDashboard({ provider, providerInstructionLink }:
             <form onSubmit={(e) => handleSubmit(e)}>
               <label className="text-gray-300 mr-auto">Columns:</label>
               {
-                user?.columns.map((column: string) => (
-                  <div className="flex items-center justify-start my-2 ml-2">
+                user?.columns.map((column: string, idx: number) => (
+                  <div key={idx} className="flex items-center justify-start my-2 ml-2">
                     <Checkbox className="disabled:bg-neutral-500 ml-4" onCheckedChange={() => handleCheckedChange(column)} defaultChecked={(activeColumns?.includes(column)) ? true : false} id={column} />
                     <label className="ml-2" htmlFor={column}>{column}</label>
                   </div>
@@ -121,8 +121,8 @@ export default function LoggedInDashboard({ provider, providerInstructionLink }:
             <>
               <label className="text-gray-300 mr-auto">Columns:</label>
               {
-                user?.columns.map((column: string) => (
-                  <div className="flex items-center justify-start my-2 ml-2">
+                user?.columns.map((column: string, idx: number) => (
+                  <div key={idx} className="flex items-center justify-start my-2 ml-2">
                     <Checkbox disabled className="disabled:bg-neutral-500 ml-4" defaultChecked={(user?.active_columns.includes(column)) ? true : false} id={column} />
                     <label className="ml-2" htmlFor={column}>{column}</label>
                   </div>

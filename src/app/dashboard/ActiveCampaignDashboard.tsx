@@ -25,7 +25,7 @@ export default function ActiveCampaignDashboard() {
   const providerInstructionLink = 'https://help.activecampaign.com/hc/en-us/articles/207317590-Getting-started-with-the-API#h_01HJ6REM2YQW19KYPB189726ST';
   const router = useRouter();
 
-  let activeColumns = user?.active_columns;
+  const activeColumns = user?.active_columns;
 
   function handleCheckedChange(column: string) {
     if (!activeColumns) return;
